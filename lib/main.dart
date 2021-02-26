@@ -13,12 +13,10 @@ import './screens/albums_overview_screen.dart';
 import './screens/product_detail_screen.dart';
 import './screens/orders_screen.dart';
 import './screens/edit_product_screen.dart';
-
-// import './screens/welcome_screen.dart';
+import './screens/LoginFormWithValidation.dart';
+import './screens/welcome_screen.dart';
 // import './screens/login_screen.dart';
 // import './screens/registration_screen.dart';
-
-import './widgets/LoginFormWithValidation.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -61,28 +59,35 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           navigatorKey: key,
           theme: ThemeData(
+            // ef4f4f
+            // ee9595
+            // ffcda3
+            // 74c7b8
+
             backgroundColor: Colors.red[300],
-            primaryColor: Colors.red,
-            primaryColorLight: Colors.red[400],
-            primaryColorDark: Colors.red[800],
-            accentColor: Colors.pink,
-            bottomAppBarColor: Color.fromRGBO(52, 52, 52, 1),
+            primaryColor: Color.fromRGBO(244, 67, 54, 1),
+            primaryColorLight: Color.fromRGBO(255, 205, 210, 1),
+            primaryColorDark: Color.fromRGBO(211, 47, 47, 1),
+            accentColor: Color.fromRGBO(3, 169, 244, 1),
+            bottomAppBarColor: Color.fromRGBO(189, 189, 189, 1),
             canvasColor: Colors.white,
             //canvasColor: Color.fromRGBO(255, 254, 229, 1),
             fontFamily: 'Lato',
             textTheme: ThemeData.light().textTheme.copyWith(
                   headline1: TextStyle(
+                    color:
+                        Color.fromRGBO(255, 255, 255, 1), //text primary color
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                   headline2: TextStyle(
                     fontSize: 20,
-                    color: Colors.white,
+                    color: Color.fromRGBO(33, 33, 33, 1),
                     fontWeight: FontWeight.bold,
                   ),
                   headline3: TextStyle(
                     fontSize: 18,
-                    color: Colors.black,
+                    color: Color.fromRGBO(117, 117, 117, 1),
                     fontWeight: FontWeight.normal,
                     fontFamily: 'Roboto',
                   ),
@@ -114,7 +119,7 @@ class MyApp extends StatelessWidget {
                       authResultSnapshot.connectionState ==
                               ConnectionState.waiting
                           ? SplashScreen()
-                          : LoginFormValidation(),
+                          : WelcomeScreen(),
                 ),
           routes: {
             LoginFormValidation.routeName: (ctx) => LoginFormValidation(),
