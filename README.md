@@ -1,27 +1,32 @@
-# Project Title
+# unWrapp
 
-One Paragraph of project description goes here
+Time has come to unwrap an app from your liebling!
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+<img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page1.png" width="30%">                                                                                     <img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page2.png" width="30%">
+
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+You need flutter SDK, Android Studio and Android emulator and as usual any kind of text editor (Visual Studio) to code with Dart language. 
 
 ```
-Give examples
+- Flutter SDK
+- Android Studio
+- Virtual Android emulator
+- Cloud/Database/Storage (Firebase)
+- possible Google services when necessary
+- Enthusiasm :)
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Visual Code or Terminal(flutter run) in Debug mode 
 
 ```
-Give the example
+flutter run 
+flutter pub get
 ```
 
 
