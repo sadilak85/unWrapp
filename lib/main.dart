@@ -1,9 +1,11 @@
+import 'package:unWrapp/screens/codeEntry_screen.dart';
 import 'package:unWrapp/screens/templates_overview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import './helpers/custom_route.dart';
+import './helpers/welcomescreen_controller.dart';
 import './providers/albums.dart';
 import './providers/orders.dart';
 import './providers/auth.dart';
@@ -14,7 +16,7 @@ import './screens/product_detail_screen.dart';
 import './screens/orders_screen.dart';
 import './screens/edit_product_screen.dart';
 import './screens/LoginFormWithValidation.dart';
-import './screens/welcome_screen.dart';
+
 // import './screens/login_screen.dart';
 // import './screens/registration_screen.dart';
 
@@ -123,6 +125,7 @@ class MyApp extends StatelessWidget {
                 ),
           routes: {
             LoginFormValidation.routeName: (ctx) => LoginFormValidation(),
+            CodeScreen.routeName: (ctx) => CodeScreen(),
             // LoginScreen.routeName: (ctx) => LoginScreen(),
             // RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
             TemplatesOverviewScreen.routeName: (ctx) =>
