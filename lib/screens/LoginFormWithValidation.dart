@@ -204,43 +204,61 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            FlatButton(
-                              onPressed: () {
-                                //TODO FORGOT PASSWORD SCREEN GOES HERE
-                              },
-                              child: Text(
-                                'Forgot Password?',
-                                style: TextStyle(
+                            Container(
+                              decoration: BoxDecoration(
                                   color: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .color,
-                                  fontSize: 15,
-                                  fontFamily: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .fontFamily,
-                                  fontWeight: FontWeight.normal,
+                                      .backgroundColor
+                                      .withOpacity(0.8),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: FlatButton(
+                                onPressed: () {
+                                  //TODO FORGOT PASSWORD SCREEN GOES HERE
+                                },
+                                child: Text(
+                                  'Forgot Password?',
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .headline5
+                                        .color,
+                                    fontSize: 15,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .headline5
+                                        .fontFamily,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
                                 ),
                               ),
                             ),
-                            FlatButton(
-                              onPressed: () {
-                                //SignIn
-                              },
-                              child: Text(
-                                'Create Account',
-                                style: TextStyle(
+                            Container(
+                              decoration: BoxDecoration(
                                   color: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .color,
-                                  fontSize: 15,
-                                  fontFamily: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .fontFamily,
-                                  fontWeight: FontWeight.normal,
+                                      .backgroundColor
+                                      .withOpacity(0.8),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: FlatButton(
+                                onPressed: () {
+                                  //SignIn
+                                },
+                                child: Text(
+                                  'Create Account',
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .headline5
+                                        .color,
+                                    fontSize: 15,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .headline5
+                                        .fontFamily,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  softWrap: true,
+                                  overflow: TextOverflow.fade,
                                 ),
                               ),
                             ),
