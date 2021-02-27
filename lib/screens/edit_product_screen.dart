@@ -17,7 +17,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
-  var _editedProduct = Product(
+  var _editedProduct = Album(
     id: null,
     title: '',
     price: 0,
@@ -45,7 +45,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       final productId = ModalRoute.of(context).settings.arguments as String;
       if (productId != null) {
         _editedProduct =
-            Provider.of<Products>(context, listen: false).findById(productId);
+            Provider.of<Albums>(context, listen: false).findById(productId);
         _initValues = {
           'title': _editedProduct.title,
           'description': _editedProduct.description,
@@ -93,11 +93,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
       _isLoading = true;
     });
     if (_editedProduct.id != null) {
-      await Provider.of<Products>(context, listen: false)
+      await Provider.of<Albums>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
     } else {
       try {
-        await Provider.of<Products>(context, listen: false)
+        await Provider.of<Albums>(context, listen: false)
             .addProduct(_editedProduct);
       } catch (error) {
         await showDialog(
@@ -134,7 +134,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Product'),
+        title: Text('Edit Album'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),
@@ -166,7 +166,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        _editedProduct = Product(
+                        _editedProduct = Album(
                           title: value,
                           price: _editedProduct.price,
                           description: _editedProduct.description,
@@ -198,7 +198,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        _editedProduct = Product(
+                        _editedProduct = Album(
                           title: _editedProduct.title,
                           price: double.parse(value),
                           description: _editedProduct.description,
@@ -223,7 +223,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        _editedProduct = Product(
+                        _editedProduct = Album(
                           title: _editedProduct.title,
                           price: _editedProduct.price,
                           description: value,
@@ -283,7 +283,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               return null;
                             },
                             onSaved: (value) {
-                              _editedProduct = Product(
+                              _editedProduct = Album(
                                 title: _editedProduct.title,
                                 price: _editedProduct.price,
                                 description: _editedProduct.description,

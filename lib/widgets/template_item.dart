@@ -5,19 +5,19 @@ import '../models/template.dart';
 class TemplateItem extends StatelessWidget {
   final String id;
   final String title;
-  final String templatebackground;
-  final String buttonimage;
+  final String tempbackgroundpic;
+  final String tempbuttonimage;
+  final Color tempbackgroundcolor;
+  final String backgroundcolorname;
 
-  TemplateItem(this.id, this.title, this.templatebackground, this.buttonimage);
+  TemplateItem(this.id, this.title, this.tempbackgroundpic,
+      this.tempbuttonimage, this.tempbackgroundcolor, this.backgroundcolorname);
 
   void selectCategory(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(
       AlbumsOverviewScreen.routeName,
-      arguments: ScreenArguments(
-        id,
-        title,
-        templatebackground,
-      ),
+      arguments:
+          ScreenArguments(id, title, tempbackgroundpic, backgroundcolorname),
     );
   }
 
@@ -31,7 +31,7 @@ class TemplateItem extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
             child: Image.network(
-              buttonimage,
+              tempbuttonimage,
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,

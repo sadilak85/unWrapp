@@ -9,19 +9,19 @@ import 'auth.dart';
 import '../models/http_exception.dart';
 import 'album.dart';
 
-class Products with ChangeNotifier {
-  List<Product> _items = [];
+class Albums with ChangeNotifier {
+  List<Album> _items = [];
   // var _showFavoritesOnly = false;
   final String authToken;
   final String userId;
 
-  Products(this.authToken, this.userId, this._items);
+  Albums(this.authToken, this.userId, this._items);
 
-  List<Product> get items {
+  List<Album> get items {
     return [..._items];
   }
 
-  Product findById(String id) {
+  Album findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
@@ -48,9 +48,9 @@ class Products with ChangeNotifier {
       }
       url =
           'https://test-92753-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
-      final List<Product> loadedProducts = [];
+      final List<Album> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
-        loadedProducts.add(Product(
+        loadedProducts.add(Album(
           id: prodId,
           title: prodData['title'],
           description: prodData['description'],
@@ -68,7 +68,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  Future<void> addProduct(Product product) async {
+  Future<void> addProduct(Album product) async {
     final url =
         'https://test-92753-default-rtdb.firebaseio.com/products.json?auth=$authToken';
     try {
@@ -82,7 +82,7 @@ class Products with ChangeNotifier {
           'creatorId': userId,
         }),
       );
-      final newProduct = Product(
+      final newProduct = Album(
         title: product.title,
         description: product.description,
         price: product.price,
@@ -98,7 +98,7 @@ class Products with ChangeNotifier {
     }
   }
 
-  Future<void> updateProduct(String id, Product newProduct) async {
+  Future<void> updateProduct(String id, Album newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url =

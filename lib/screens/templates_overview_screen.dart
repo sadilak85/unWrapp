@@ -25,8 +25,10 @@ class TemplatesOverviewScreen extends StatelessWidget {
                         (catData) => TemplateItem(
                           catData.id,
                           catData.title,
-                          catData.templatebackground,
-                          catData.buttonimage,
+                          catData.tempbackgroundpic,
+                          catData.tempbuttonimage,
+                          catData.tempbackgroundcolor,
+                          catData.backgroundcolorname,
                         ),
                       )
                       .toList(),

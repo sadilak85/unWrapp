@@ -15,7 +15,7 @@ class _CodeScreenState extends State<CodeScreen> {
   final _auth = FirebaseAuth.instance;
 
   Map<String, String> _authData = {
-    'specialkey': '',
+    'specialkey': null,
   };
 
   void _showErrorDialog(String message) {

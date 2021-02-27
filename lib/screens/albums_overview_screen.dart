@@ -20,9 +20,9 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
 
   @override
   void initState() {
-    // Provider.of<Products>(context).fetchAndSetProducts(); // WON'T WORK!
+    // Provider.of<Albums>(context).fetchAndSetProducts(); // WON'T WORK!
     // Future.delayed(Duration.zero).then((_) {
-    //   Provider.of<Products>(context).fetchAndSetProducts();
+    //   Provider.of<Albums>(context).fetchAndSetProducts();
     // });
 
     super.initState();
@@ -34,7 +34,7 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+      Provider.of<Albums>(context).fetchAndSetProducts().then((_) {
         setState(() {
           _isLoading = false;
         });
@@ -114,7 +114,7 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
           : Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(args.templatebackground),
+                  image: NetworkImage(args.tempbackgroundpic),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.5), BlendMode.dstATop),
