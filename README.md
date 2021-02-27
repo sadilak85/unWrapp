@@ -16,8 +16,12 @@ Give him/her a self made, personalized app as a present or suprise!
 <img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page2.png" width="30%">
 
 4) Login is crucial for Firebase Authentication (Email/Pass). 
-5) Personal information such as the structure of the app (Background, text, albums, names, etc) is saved in Realtime Database as JSon data.
-6) Pictures/Videos in Storage need also this authentication , so we need a first time authentication (compulsory)
+5) After login, user selects a template to ease the pain, or select to do it from scratch (Create a design)
+
+<img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page2.png" width="30%">
+
+6) Personal information such as the structure of the app (Background, text, albums, names, etc) is saved in Realtime Database as JSon data.
+7) Pictures/Videos in Storage need also this authentication , so we need a first time authentication (compulsory)
 
 
 ### Prerequisites
