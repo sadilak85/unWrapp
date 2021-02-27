@@ -12,11 +12,13 @@ class TemplatesOverviewScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         body: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Padding(
-            padding: EdgeInsets.only(top: 20.0),
-            child: OrientationBuilder(
-              builder: (context, orientation) {
-                return GridView(
+          child: OrientationBuilder(
+            builder: (context, orientation) {
+              return Padding(
+                padding: orientation == Orientation.portrait
+                    ? EdgeInsets.only(top: 20.0)
+                    : EdgeInsets.only(top: 0.0),
+                child: GridView(
                   padding: const EdgeInsets.all(10),
                   children: TEMPLATES
                       .map(
@@ -42,9 +44,9 @@ class TemplatesOverviewScreen extends StatelessWidget {
                         ? _deviceSize.width / 10
                         : _deviceSize.height / 10,
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       ),
