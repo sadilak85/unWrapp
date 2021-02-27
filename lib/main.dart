@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
             // ffcda3
             // 74c7b8
 
-            backgroundColor: Colors.red[300],
+            backgroundColor: Colors.white,
             primaryColor: Color.fromRGBO(244, 67, 54, 1),
             primaryColorLight: Color.fromRGBO(255, 205, 210, 1),
             primaryColorDark: Color.fromRGBO(211, 47, 47, 1),
@@ -83,7 +83,6 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   headline2: TextStyle(
-                    fontSize: 20,
                     color: Color.fromRGBO(33, 33, 33, 1),
                     fontWeight: FontWeight.bold,
                   ),
@@ -94,15 +93,11 @@ class MyApp extends StatelessWidget {
                     fontFamily: 'Roboto',
                   ),
                   headline4: TextStyle(
-                    fontSize: 30,
                     color: Colors.white,
-                    fontWeight: FontWeight.normal,
                     fontFamily: 'Anton',
                   ),
                   headline5: TextStyle(
-                    fontSize: 15,
                     color: Colors.red,
-                    fontWeight: FontWeight.normal,
                     fontFamily: 'Roboto',
                   ),
                 ),

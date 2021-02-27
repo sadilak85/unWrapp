@@ -46,7 +46,7 @@ class _CodeScreenState extends State<CodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
+    final _deviceSize = MediaQuery.of(context).size;
 
     return Container(
       decoration: BoxDecoration(
@@ -70,26 +70,8 @@ class _CodeScreenState extends State<CodeScreen> {
                       children: <Widget>[
                         SizedBox(
                           height: orientation == Orientation.portrait
-                              ? deviceSize.height / 2.5
-                              : deviceSize.width / 2.5,
-                        ),
-                        Container(
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: IconTheme(
-                              data: IconThemeData(color: Colors.grey),
-                              child: Icon(
-                                Icons.chevron_right_outlined,
-                                // Icons.double_arrow,
-                                size: 60,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: orientation == Orientation.portrait
-                              ? deviceSize.height / 20
-                              : deviceSize.width / 20,
+                              ? _deviceSize.height / 1.9
+                              : _deviceSize.width / 4,
                         ),
                         Padding(
                           // padding: const EdgeInsets.all(25.0),
@@ -101,9 +83,7 @@ class _CodeScreenState extends State<CodeScreen> {
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
-                                  labelText: 'Code',
-                                  hintText:
-                                      'Enter secure code obtained from beloved one'),
+                                  hintText: 'Enter your secret box code'),
                               onChanged: (value) {
                                 if (_codeValidation(value)) {
                                   _authData['specialkey'] = value;
@@ -116,16 +96,16 @@ class _CodeScreenState extends State<CodeScreen> {
                         ),
                         SizedBox(
                           height: orientation == Orientation.portrait
-                              ? deviceSize.height / 5
-                              : deviceSize.width / 5,
+                              ? _deviceSize.height / 5
+                              : _deviceSize.width / 12,
                         ),
                         Container(
                           height: orientation == Orientation.portrait
-                              ? deviceSize.height / 14
-                              : deviceSize.width / 14,
+                              ? _deviceSize.height / 14
+                              : _deviceSize.width / 14,
                           width: orientation == Orientation.portrait
-                              ? deviceSize.width / 2
-                              : deviceSize.height / 2,
+                              ? _deviceSize.width / 2
+                              : _deviceSize.height / 2,
                           decoration: BoxDecoration(
                               color: Theme.of(context).primaryColor,
                               borderRadius: BorderRadius.circular(20)),
@@ -185,6 +165,19 @@ class _CodeScreenState extends State<CodeScreen> {
                                     .textTheme
                                     .headline2
                                     .fontWeight,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: IconTheme(
+                              data: IconThemeData(color: Colors.grey),
+                              child: Icon(
+                                Icons.chevron_right_outlined,
+                                // Icons.double_arrow,
+                                size: 60,
                               ),
                             ),
                           ),

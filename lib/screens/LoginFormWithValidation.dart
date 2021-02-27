@@ -50,7 +50,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
+    final _deviceSize = MediaQuery.of(context).size;
 
     return Container(
       decoration: BoxDecoration(
@@ -74,25 +74,8 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                       children: <Widget>[
                         SizedBox(
                           height: orientation == Orientation.portrait
-                              ? deviceSize.height / 2.5
-                              : deviceSize.width / 2.5,
-                        ),
-                        Container(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: IconTheme(
-                              data: IconThemeData(color: Colors.grey),
-                              child: Icon(
-                                Icons.chevron_left_outlined,
-                                size: 60,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: orientation == Orientation.portrait
-                              ? deviceSize.height / 10
-                              : deviceSize.width / 10,
+                              ? _deviceSize.height / 2
+                              : _deviceSize.width / 5,
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 25),
@@ -150,16 +133,16 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                         ),
                         SizedBox(
                           height: orientation == Orientation.portrait
-                              ? deviceSize.height / 25
-                              : deviceSize.width / 25,
+                              ? _deviceSize.height / 10
+                              : _deviceSize.width / 25,
                         ),
                         Container(
                           height: orientation == Orientation.portrait
-                              ? deviceSize.height / 14
-                              : deviceSize.width / 14,
+                              ? _deviceSize.height / 14
+                              : _deviceSize.width / 14,
                           width: orientation == Orientation.portrait
-                              ? deviceSize.width / 2
-                              : deviceSize.height / 2,
+                              ? _deviceSize.width / 2
+                              : _deviceSize.height / 2,
                           decoration: BoxDecoration(
                               color: Theme.of(context).primaryColor,
                               borderRadius: BorderRadius.circular(20)),
@@ -232,38 +215,13 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                                       .textTheme
                                       .headline5
                                       .color,
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .fontSize,
+                                  fontSize: 15,
                                   fontFamily: Theme.of(context)
                                       .textTheme
                                       .headline5
                                       .fontFamily,
-                                  fontWeight: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .fontWeight,
+                                  fontWeight: FontWeight.normal,
                                 ),
-                              ),
-                            ),
-                            Text(
-                              'New User?',
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline5.color,
-                                fontSize: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    .fontSize,
-                                fontFamily: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    .fontFamily,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    .fontWeight,
                               ),
                             ),
                             FlatButton(
@@ -277,18 +235,12 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                                       .textTheme
                                       .headline5
                                       .color,
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .fontSize,
+                                  fontSize: 15,
                                   fontFamily: Theme.of(context)
                                       .textTheme
                                       .headline5
                                       .fontFamily,
-                                  fontWeight: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .fontWeight,
+                                  fontWeight: FontWeight.normal,
                                 ),
                               ),
                             ),

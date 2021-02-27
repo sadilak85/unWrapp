@@ -11,7 +11,7 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
+    final _deviceSize = MediaQuery.of(context).size;
     // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);
     // transformConfig.translate(-10.0);
     return Scaffold(
@@ -33,8 +33,8 @@ class AuthScreen extends StatelessWidget {
           ),
           SingleChildScrollView(
             child: Container(
-              height: deviceSize.height,
-              width: deviceSize.width,
+              height: _deviceSize.height,
+              width: _deviceSize.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,18 +59,16 @@ class AuthScreen extends StatelessWidget {
                         'Start to create a present',
                         style: TextStyle(
                           color: Theme.of(context).textTheme.headline4.color,
-                          fontSize:
-                              Theme.of(context).textTheme.headline4.fontSize,
+                          fontSize: 30,
                           fontFamily:
                               Theme.of(context).textTheme.headline4.fontFamily,
-                          fontWeight:
-                              Theme.of(context).textTheme.headline4.fontWeight,
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
                   ),
                   Flexible(
-                    flex: deviceSize.width > 600 ? 2 : 1,
+                    flex: _deviceSize.width > 600 ? 2 : 1,
                     child: AuthCard(),
                   ),
                 ],
@@ -183,7 +181,7 @@ class _AuthCardState extends State<AuthCard> {
 
   @override
   Widget build(BuildContext context) {
-    final deviceSize = MediaQuery.of(context).size;
+    final _deviceSize = MediaQuery.of(context).size;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -193,7 +191,7 @@ class _AuthCardState extends State<AuthCard> {
         height: _authMode == AuthMode.Signup ? 320 : 260,
         constraints:
             BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
-        width: deviceSize.width * 0.75,
+        width: _deviceSize.width * 0.75,
         padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,

@@ -22,7 +22,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return PageView(
-      pageSnapping: false,
       controller: _controller,
       children: [
         CodeScreen(),

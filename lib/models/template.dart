@@ -15,7 +15,7 @@ const TEMPLATES = const [
     templatebackground:
         'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
     buttonimage:
-        'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
+        'https://cdn.pixabay.com/photo/2014/06/30/11/40/birthday-cake-380178_1280.jpg',
   ),
   Template(
     id: 'c3',
@@ -39,15 +39,15 @@ const TEMPLATES = const [
     templatebackground:
         'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
     buttonimage:
-        'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
+        'https://cdn.pixabay.com/photo/2017/01/09/02/02/pink-wine-1964457_1280.jpg',
   ),
   Template(
     id: 'c6',
-    title: "Celebration",
+    title: "Create a design",
     templatebackground:
         'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
     buttonimage:
-        'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
+        'https://cdn.pixabay.com/photo/2017/03/12/13/41/beaded-2137080_1280.jpg',
   ),
 ];
 
