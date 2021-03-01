@@ -48,14 +48,13 @@ class _CodeScreenState extends State<CodeScreen> {
   Widget build(BuildContext context) {
     final _deviceSize = MediaQuery.of(context).size;
 
-    return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/welcomelogo.png'),
-              fit: BoxFit.cover)),
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: ModalProgressHUD(
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/welcomelogo.png'),
+                fit: BoxFit.cover)),
+        child: ModalProgressHUD(
           inAsyncCall: showSpinner,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
