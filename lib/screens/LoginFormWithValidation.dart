@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../screens/templates_overview_screen.dart';
+//import 'package:form_field_validator/form_field_validator.dart';
 
 class LoginFormValidation extends StatefulWidget {
   static const routeName = '/LoginFormValidation-screen';
@@ -23,7 +24,15 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An Error Occurred!'),
+        title: Text(
+          'An Error Occurred!',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontFamily: Theme.of(context).textTheme.headline3.fontFamily,
+            fontWeight: Theme.of(context).textTheme.headline3.fontWeight,
+          ),
+        ),
         content: Text(message),
         actions: <Widget>[
           FlatButton(
@@ -55,9 +64,10 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/welcomelogo.png'),
+              image: AssetImage('assets/images/loginlogo.png'),
               fit: BoxFit.cover)),
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: Colors.transparent,
         body: ModalProgressHUD(
           inAsyncCall: showSpinner,
@@ -78,23 +88,33 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                               : _deviceSize.width / 5,
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 25),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: orientation == Orientation.portrait
+                                ? _deviceSize.width / 15
+                                : _deviceSize.height / 4,
+                          ),
                           child: Container(
-                            color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: TextFormField(
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Email',
-                                  hintText:
-                                      'Enter valid email id as abc@gmail.com'),
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                  ),
+                                  //labelText: 'Email',
+                                  hintText: 'Enter valid email'),
                               // validator: MultiValidator(
                               //   [
                               //     RequiredValidator(errorText: "* Required"),
                               //     EmailValidator(
                               //         errorText: "Enter valid email id"),
                               //   ],
-                              //),
+                              // ),
                               onChanged: (value) {
                                 _authData['email'] = value;
                               },
@@ -102,15 +122,31 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 15, bottom: 0),
+                          padding: orientation == Orientation.portrait
+                              ? EdgeInsets.only(
+                                  left: _deviceSize.width / 15,
+                                  right: _deviceSize.width / 15,
+                                  top: _deviceSize.width / 15,
+                                  bottom: 0)
+                              : EdgeInsets.only(
+                                  left: _deviceSize.height / 4,
+                                  right: _deviceSize.height / 4,
+                                  top: _deviceSize.height / 30,
+                                  bottom: 0),
                           child: Container(
-                            color: Colors.white,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
                             child: TextFormField(
                               obscureText: true,
                               decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  labelText: 'Password',
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(5),
+                                    ),
+                                  ),
+                                  //   labelText: 'Password',
                                   hintText: 'Enter secure password'),
                               // validator: MultiValidator(
                               //   [
@@ -123,7 +159,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                               //             "Password should not be greater than 15 characters")
                               //   ],
                               // ),
-                              //validatePassword,        //Function to check validation
+                              // validatePassword,        //Function to check validation
 
                               onChanged: (value) {
                                 _authData['password'] = value;
@@ -133,7 +169,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                         ),
                         SizedBox(
                           height: orientation == Orientation.portrait
-                              ? _deviceSize.height / 10
+                              ? _deviceSize.height / 25
                               : _deviceSize.width / 25,
                         ),
                         Container(
@@ -188,7 +224,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                               'Login',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 22,
                                 fontFamily: Theme.of(context)
                                     .textTheme
                                     .headline2
@@ -204,62 +240,82 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Container(
-                              decoration: BoxDecoration(
+                            FlatButton(
+                              onPressed: () async {
+                                if (loginformkey.currentState.validate()) {
+                                  setState(() {
+                                    showSpinner = true;
+                                  });
+                                  print(_authData);
+                                  try {
+                                    final newUser = await _auth
+                                        .createUserWithEmailAndPassword(
+                                            email: _authData['email'],
+                                            password: _authData['password']);
+                                    if (newUser != null) {
+                                      Navigator.of(context).pushNamed(
+                                          TemplatesOverviewScreen.routeName);
+                                    }
+
+                                    setState(() {
+                                      showSpinner = false;
+                                    });
+                                  } catch (error) {
+                                    var errorMessage =
+                                        'Authentication failed: \n';
+                                    errorMessage =
+                                        errorMessage + error.toString();
+
+                                    _showErrorDialog(errorMessage);
+                                    setState(() {
+                                      showSpinner = false;
+                                    });
+                                  }
+                                } else {
+                                  _showErrorDialog("Not Validated");
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                }
+                              },
+                              child: Text(
+                                'Create Account',
+                                style: TextStyle(
                                   color: Theme.of(context)
-                                      .backgroundColor
-                                      .withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: FlatButton(
-                                onPressed: () {
-                                  //TODO FORGOT PASSWORD SCREEN GOES HERE
-                                },
-                                child: Text(
-                                  'Forgot Password?',
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headline5
-                                        .color,
-                                    fontSize: 15,
-                                    fontFamily: Theme.of(context)
-                                        .textTheme
-                                        .headline5
-                                        .fontFamily,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  softWrap: true,
-                                  overflow: TextOverflow.fade,
+                                      .textTheme
+                                      .headline5
+                                      .color,
+                                  fontSize: 15,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      .fontFamily,
+                                  fontWeight: FontWeight.normal,
                                 ),
+                                softWrap: true,
+                                overflow: TextOverflow.fade,
                               ),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
+                            FlatButton(
+                              onPressed: () {
+                                //TODO FORGOT PASSWORD SCREEN GOES HERE
+                              },
+                              child: Text(
+                                'Forgot Password?',
+                                style: TextStyle(
                                   color: Theme.of(context)
-                                      .backgroundColor
-                                      .withOpacity(0.8),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: FlatButton(
-                                onPressed: () {
-                                  //SignIn
-                                },
-                                child: Text(
-                                  'Create Account',
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headline5
-                                        .color,
-                                    fontSize: 15,
-                                    fontFamily: Theme.of(context)
-                                        .textTheme
-                                        .headline5
-                                        .fontFamily,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  softWrap: true,
-                                  overflow: TextOverflow.fade,
+                                      .textTheme
+                                      .headline5
+                                      .color,
+                                  fontSize: 15,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      .fontFamily,
+                                  fontWeight: FontWeight.normal,
                                 ),
+                                softWrap: true,
+                                overflow: TextOverflow.fade,
                               ),
                             ),
                           ],

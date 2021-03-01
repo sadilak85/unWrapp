@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/albums.dart';
-import './product_item.dart';
+import './album_item.dart';
 
 class AlbumsGrid extends StatelessWidget {
   @override

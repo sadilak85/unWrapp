@@ -35,7 +35,7 @@ class Albums with ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+  Future<void> fetchAndSetAlbums([bool filterByUser = false]) async {
     final filterString =
         filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
     var url =

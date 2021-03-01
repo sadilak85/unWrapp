@@ -20,9 +20,9 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
 
   @override
   void initState() {
-    // Provider.of<Albums>(context).fetchAndSetProducts(); // WON'T WORK!
+    // Provider.of<Albums>(context).fetchAndSetAlbums(); // WON'T WORK!
     // Future.delayed(Duration.zero).then((_) {
-    //   Provider.of<Albums>(context).fetchAndSetProducts();
+    //   Provider.of<Albums>(context).fetchAndSetAlbums();
     // });
 
     super.initState();
@@ -34,7 +34,7 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<Albums>(context).fetchAndSetProducts().then((_) {
+      Provider.of<Albums>(context).fetchAndSetAlbums().then((_) {
         setState(() {
           _isLoading = false;
         });

@@ -12,9 +12,9 @@ import './providers/auth.dart';
 
 import './screens/splash_screen.dart';
 import './screens/albums_overview_screen.dart';
-import './screens/product_detail_screen.dart';
+import './screens/album_detail_screen.dart';
 import './screens/orders_screen.dart';
-import './screens/edit_product_screen.dart';
+import './screens/edit_album_screen.dart';
 import './screens/LoginFormWithValidation.dart';
 
 // import './screens/login_screen.dart';
