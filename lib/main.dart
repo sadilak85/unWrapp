@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
             // ee9595
             // ffcda3
             // 74c7b8
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.red,
             backgroundColor: Colors.white,
             primaryColor: Color.fromRGBO(244, 67, 54, 1),
             primaryColorLight: Color.fromRGBO(255, 205, 210, 1),

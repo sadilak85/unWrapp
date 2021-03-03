@@ -32,7 +32,7 @@ class _ShareScreenState extends State<ShareScreen> {
               Container(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'About this App',
+                  'Share this App with your friends',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -42,7 +42,7 @@ class _ShareScreenState extends State<ShareScreen> {
               Container(
                 padding: const EdgeInsets.only(top: 16),
                 child: const Text(
-                  'Are you one of those who makes everything\n at the last moment?',
+                  "Your friends need your care and invitation.\n Sharing this app may probably help them.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -57,7 +57,7 @@ class _ShareScreenState extends State<ShareScreen> {
                       width: 120,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Theme.of(context).primaryColor,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(4.0)),
                         boxShadow: <BoxShadow>[

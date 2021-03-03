@@ -127,12 +127,12 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           height: 24,
                           child: Image.asset(listData.imageName,
                               color: widget.screenIndex == listData.index
-                                  ? Colors.blue
+                                  ? Theme.of(context).primaryColor
                                   : AppTheme.nearlyBlack),
                         )
                       : Icon(listData.icon.icon,
                           color: widget.screenIndex == listData.index
-                              ? Colors.blue
+                              ? Theme.of(context).primaryColor
                               : AppTheme.nearlyBlack),
                   const Padding(
                     padding: EdgeInsets.all(4.0),
@@ -143,7 +143,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: widget.screenIndex == listData.index
-                          ? Colors.blue
+                          ? Theme.of(context).primaryColor
                           : AppTheme.nearlyBlack,
                     ),
                     textAlign: TextAlign.left,
@@ -170,7 +170,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                                 MediaQuery.of(context).size.width * 0.75 - 64,
                             height: 46,
                             decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.2),
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.2),
                               borderRadius: new BorderRadius.only(
                                 topLeft: Radius.circular(0),
                                 topRight: Radius.circular(28),

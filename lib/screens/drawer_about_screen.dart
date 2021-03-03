@@ -57,7 +57,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       width: 120,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Theme.of(context).primaryColor,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(4.0)),
                         boxShadow: <BoxShadow>[
