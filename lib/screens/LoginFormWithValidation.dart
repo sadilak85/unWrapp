@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:unWrapp/screens/templates_selection_screen.dart';
-//import 'package:form_field_validator/form_field_validator.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:unWrapp/screens/navigation_home_screen.dart';
 
 class LoginFormValidation extends StatefulWidget {
   static const routeName = '/LoginFormValidation-screen';
@@ -19,6 +19,11 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
     'email': '',
     'password': '',
   };
+
+  // Future<bool> getData() async {
+  //   await Future<dynamic>.delayed(const Duration(milliseconds: 0));
+  //   return true;
+  // }
 
   void _showErrorDialog(String message) {
     showDialog(
@@ -62,226 +67,245 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
     final _deviceSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      resizeToAvoidBottomInset: true,
-      body: ModalProgressHUD(
-        inAsyncCall: showSpinner,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.0),
-          child: SingleChildScrollView(
-            child: Form(
-              autovalidateMode:
-                  AutovalidateMode.always, //check for validation while typing
-              key: loginformkey,
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: _deviceSize.height / 2,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: _deviceSize.width / 15,
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
-                            ),
-                            //labelText: 'Email',
-                            hintText: 'Enter valid email'),
-                        // validator: MultiValidator(
-                        //   [
-                        //     RequiredValidator(errorText: "* Required"),
-                        //     EmailValidator(
-                        //         errorText: "Enter valid email id"),
-                        //   ],
-                        // ),
-                        onChanged: (value) {
-                          _authData['email'] = value;
-                        },
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: _deviceSize.width / 15,
-                        right: _deviceSize.width / 15,
-                        top: _deviceSize.width / 15,
-                        bottom: 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(5),
-                              ),
-                            ),
-                            //   labelText: 'Password',
-                            hintText: 'Enter secure password'),
-                        // validator: MultiValidator(
-                        //   [
-                        //     RequiredValidator(errorText: "* Required"),
-                        //     MinLengthValidator(6,
-                        //         errorText:
-                        //             "Password should be atleast 6 characters"),
-                        //     MaxLengthValidator(15,
-                        //         errorText:
-                        //             "Password should not be greater than 15 characters")
-                        //   ],
-                        // ),
-                        // validatePassword,        //Function to check validation
-
-                        onChanged: (value) {
-                          _authData['password'] = value;
-                        },
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: _deviceSize.height / 25,
-                  ),
-                  Container(
-                    height: _deviceSize.height / 14,
-                    width: _deviceSize.width / 2,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: FlatButton(
-                      onPressed: () async {
-                        if (loginformkey.currentState.validate()) {
-                          setState(() {
-                            showSpinner = true;
-                          });
-                          print(_authData);
-                          try {
-                            final user = await _auth.signInWithEmailAndPassword(
-                                email: _authData['email'],
-                                password: _authData['password']);
-                            if (user != null) {
-                              Navigator.of(context).pushNamed(
-                                  NavigationTemplatesScreen.routeName);
-                            }
-
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          } catch (error) {
-                            var errorMessage = 'Authentication failed: \n';
-                            errorMessage = errorMessage + error.toString();
-
-                            _showErrorDialog(errorMessage);
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          }
-                        } else {
-                          _showErrorDialog("Not Validated");
-                          setState(() {
-                            showSpinner = false;
-                          });
-                        }
-                      },
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontFamily:
-                              Theme.of(context).textTheme.headline2.fontFamily,
-                          fontWeight:
-                              Theme.of(context).textTheme.headline2.fontWeight,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/welcomelogo.png'),
+              fit: BoxFit.cover),
+        ),
+        child: ModalProgressHUD(
+          inAsyncCall: showSpinner,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.0),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              body: SingleChildScrollView(
+                child: Form(
+                  autovalidateMode: AutovalidateMode
+                      .always, //check for validation while typing
+                  key: loginformkey,
+                  child: Column(
                     children: <Widget>[
-                      FlatButton(
-                        onPressed: () async {
-                          if (loginformkey.currentState.validate()) {
-                            setState(() {
-                              showSpinner = true;
-                            });
-                            print(_authData);
-                            try {
-                              final newUser =
-                                  await _auth.createUserWithEmailAndPassword(
-                                      email: _authData['email'],
-                                      password: _authData['password']);
-                              if (newUser != null) {
-                                Navigator.of(context).pushNamed(
-                                    NavigationTemplatesScreen.routeName);
-                              }
+                      SizedBox(
+                        height: _deviceSize.height / 2,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: _deviceSize.width / 15,
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
+                                ),
+                                labelText: 'Email',
+                                hintText: 'Enter valid email'),
+                            validator: MultiValidator(
+                              [
+                                RequiredValidator(errorText: "* Required"),
+                                EmailValidator(
+                                    errorText: "Enter valid email id"),
+                              ],
+                            ),
+                            onChanged: (value) {
+                              _authData['email'] = value;
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: _deviceSize.width / 15,
+                            right: _deviceSize.width / 15,
+                            top: _deviceSize.width / 15,
+                            bottom: 0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: TextFormField(
+                            obscureText: true,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(5),
+                                  ),
+                                ),
+                                labelText: 'Password',
+                                hintText: 'Enter secure password'),
+                            validator: MultiValidator(
+                              [
+                                RequiredValidator(errorText: "* Required"),
+                                MinLengthValidator(6,
+                                    errorText:
+                                        "Password should be atleast 6 characters"),
+                                MaxLengthValidator(15,
+                                    errorText:
+                                        "Password should not be greater than 15 characters")
+                              ],
+                            ),
+                            // validatePassword,        //Function to check validation
 
+                            onChanged: (value) {
+                              _authData['password'] = value;
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: _deviceSize.height / 25,
+                      ),
+                      Container(
+                        height: _deviceSize.height / 14,
+                        width: _deviceSize.width / 2,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: FlatButton(
+                          onPressed: () async {
+                            if (loginformkey.currentState.validate()) {
                               setState(() {
-                                showSpinner = false;
+                                showSpinner = true;
                               });
-                            } catch (error) {
-                              var errorMessage = 'Authentication failed: \n';
-                              errorMessage = errorMessage + error.toString();
+                              print(_authData);
+                              try {
+                                final user =
+                                    await _auth.signInWithEmailAndPassword(
+                                        email: _authData['email'],
+                                        password: _authData['password']);
+                                if (user != null) {
+                                  Navigator.of(context).pushNamed(
+                                      NavigationHomeScreen.routeName);
+                                }
 
-                              _showErrorDialog(errorMessage);
+                                setState(() {
+                                  showSpinner = false;
+                                });
+                              } catch (error) {
+                                var errorMessage = 'Authentication failed: \n';
+                                errorMessage = errorMessage + error.toString();
+
+                                _showErrorDialog(errorMessage);
+                                setState(() {
+                                  showSpinner = false;
+                                });
+                              }
+                            } else {
+                              _showErrorDialog("Not Validated");
                               setState(() {
                                 showSpinner = false;
                               });
                             }
-                          } else {
-                            _showErrorDialog("Not Validated");
-                            setState(() {
-                              showSpinner = false;
-                            });
-                          }
-                        },
-                        child: Text(
-                          'Create Account',
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.headline5.color,
-                            fontSize: 15,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .headline5
-                                .fontFamily,
-                            fontWeight: FontWeight.normal,
+                          },
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 22,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .headline2
+                                  .fontFamily,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2
+                                  .fontWeight,
+                            ),
                           ),
-                          softWrap: true,
-                          overflow: TextOverflow.fade,
                         ),
                       ),
-                      FlatButton(
-                        onPressed: () {
-                          //TODO FORGOT PASSWORD SCREEN GOES HERE
-                        },
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.headline5.color,
-                            fontSize: 15,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .headline5
-                                .fontFamily,
-                            fontWeight: FontWeight.normal,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          FlatButton(
+                            onPressed: () async {
+                              if (loginformkey.currentState.validate()) {
+                                setState(() {
+                                  showSpinner = true;
+                                });
+                                print(_authData);
+                                try {
+                                  final newUser = await _auth
+                                      .createUserWithEmailAndPassword(
+                                          email: _authData['email'],
+                                          password: _authData['password']);
+                                  if (newUser != null) {
+                                    Navigator.of(context).pushNamed(
+                                        NavigationHomeScreen.routeName);
+                                  }
+
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                } catch (error) {
+                                  var errorMessage =
+                                      'Authentication failed: \n';
+                                  errorMessage =
+                                      errorMessage + error.toString();
+
+                                  _showErrorDialog(errorMessage);
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                }
+                              } else {
+                                _showErrorDialog("Not Validated");
+                                setState(() {
+                                  showSpinner = false;
+                                });
+                              }
+                            },
+                            child: Text(
+                              'Create Account',
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).textTheme.headline5.color,
+                                fontSize: 15,
+                                fontFamily: Theme.of(context)
+                                    .textTheme
+                                    .headline5
+                                    .fontFamily,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                            ),
                           ),
-                          softWrap: true,
-                          overflow: TextOverflow.fade,
-                        ),
+                          FlatButton(
+                            onPressed: () {
+                              //TODO FORGOT PASSWORD SCREEN GOES HERE
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).textTheme.headline5.color,
+                                fontSize: 15,
+                                fontFamily: Theme.of(context)
+                                    .textTheme
+                                    .headline5
+                                    .fontFamily,
+                                fontWeight: FontWeight.normal,
+                              ),
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

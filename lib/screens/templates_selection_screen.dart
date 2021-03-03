@@ -95,7 +95,7 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
   @override
   void initState() {
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
+        duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
   }
 
@@ -135,8 +135,8 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
                       ),
                     ),
                     Text(
-                      '''\n\nSelect a layout of your gift app before starting to create it. 
-                      \n\nTap to open detailed view then click check icon to confirm.''',
+                      '''\n\nChoose a celebration concept for your app. 
+                      \n\nAI will make it easy for you to start creation regarding your selection''',
                       style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 16,
@@ -269,7 +269,7 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
               child: Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Choose a Template',
+                  'Celebration type',
                   style: TextStyle(
                     fontSize: 22,
                     color: AppTheme.darkText,
@@ -336,9 +336,33 @@ class TemplateListView extends StatelessWidget {
                 child: Stack(
                   alignment: AlignmentDirectional.center,
                   children: <Widget>[
-                    Image.network(
-                      listData.tempbuttonimage,
-                      fit: BoxFit.cover,
+                    Stack(
+                      children: <Widget>[
+                        Image.network(
+                          listData.tempbuttonimage,
+                          fit: BoxFit.cover,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: Container(
+                              color: Colors.black45,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  listData.title,
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     Material(
                       color: Colors.transparent,

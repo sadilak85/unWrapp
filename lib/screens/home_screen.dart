@@ -1,5 +1,5 @@
-import 'package:unWrapp/helpers/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:unWrapp/helpers/app_theme.dart';
 import 'package:unWrapp/models/homelist.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -17,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
+        duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
   }
 
