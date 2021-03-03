@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
-import '../helpers/rounded_button.dart';
-import '../helpers/constants.dart';
-import './templates_overview_screen.dart';
+import 'package:unWrapp/helpers/rounded_button.dart';
+import 'package:unWrapp/helpers/constants.dart';
+import 'package:unWrapp/screens/templates_selection_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const String id = 'registration_screen';
@@ -104,7 +104,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         email: email, password: password);
                     if (newUser != null) {
                       Navigator.of(context)
-                          .pushNamed(TemplatesOverviewScreen.routeName);
+                          .pushNamed(NavigationTemplatesScreen.routeName);
                     }
 
                     setState(() {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/edit_album_screen.dart';
-import '../providers/albums.dart';
+import 'package:unWrapp/screens/edit_album_screen.dart';
+import 'package:unWrapp/providers/albums.dart';
 
 class UserProductItem extends StatelessWidget {
   final String id;

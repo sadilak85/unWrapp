@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../screens/album_detail_screen.dart';
-import '../providers/album.dart';
+import 'package:unWrapp/screens/album_detail_screen.dart';
+import 'package:unWrapp/providers/album.dart';
 
 class ProductItem extends StatelessWidget {
   @override
@@ -27,7 +27,7 @@ class ProductItem extends StatelessWidget {
         footer: GridTileBar(
           backgroundColor: Colors.black87,
           leading: Consumer<Album>(
-            builder: (ctx, product, _) => IconButton(
+            builder: (context, product, _) => IconButton(
               icon: Icon(
                 Icons.favorite,
               ),

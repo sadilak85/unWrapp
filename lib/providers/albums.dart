@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
-import '../main.dart';
+import 'package:unWrapp/main.dart';
 import 'auth.dart';
-import '../models/http_exception.dart';
+import 'package:unWrapp/models/http_exception.dart';
 import 'album.dart';
 
 class Albums with ChangeNotifier {

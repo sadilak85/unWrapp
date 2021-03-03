@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/albums.dart';
-import './album_item.dart';
+import 'package:unWrapp/providers/albums.dart';
+import 'package:unWrapp/widgets/album_item.dart';
 
 class AlbumsGrid extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class AlbumsGrid extends StatelessWidget {
     return GridView.builder(
       padding: const EdgeInsets.all(10.0),
       itemCount: products.length,
-      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+      itemBuilder: (context, i) => ChangeNotifierProvider.value(
         // builder: (c) => products[i],
         value: products[i],
         child: ProductItem(

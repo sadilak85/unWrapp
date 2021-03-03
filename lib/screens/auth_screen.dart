@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/auth.dart';
-import '../models/http_exception.dart';
+import 'package:unWrapp/providers/auth.dart';
+import 'package:unWrapp/models/http_exception.dart';
 
 enum AuthMode { Signup, Login }
 
@@ -104,14 +104,14 @@ class _AuthCardState extends State<AuthCard> {
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
+      builder: (context) => AlertDialog(
         title: Text('An Error Occurred!'),
         content: Text(message),
         actions: <Widget>[
           FlatButton(
             child: Text('Okay'),
             onPressed: () {
-              Navigator.of(ctx).pop();
+              Navigator.of(context).pop();
             },
           )
         ],

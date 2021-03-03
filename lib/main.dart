@@ -1,22 +1,27 @@
-import 'package:unWrapp/screens/codeEntry_screen.dart';
-import 'package:unWrapp/screens/templates_overview_screen.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import './helpers/custom_route.dart';
-import './helpers/welcomescreen_controller.dart';
-import './providers/albums.dart';
-import './providers/orders.dart';
-import './providers/auth.dart';
-
-import './screens/splash_screen.dart';
-import './screens/albums_overview_screen.dart';
-import './screens/album_detail_screen.dart';
-import './screens/orders_screen.dart';
-import './screens/edit_album_screen.dart';
-import './screens/LoginFormWithValidation.dart';
-
+import 'package:unWrapp/helpers/custom_route.dart';
+import 'package:unWrapp/helpers/welcomescreen_controller.dart';
+import 'package:unWrapp/helpers/app_theme.dart';
+import 'package:unWrapp/providers/albums.dart';
+import 'package:unWrapp/providers/orders.dart';
+import 'package:unWrapp/providers/auth.dart';
+import 'package:unWrapp/screens/codeEntry_screen.dart';
+import 'package:unWrapp/screens/splash_screen.dart';
+import 'package:unWrapp/screens/albums_overview_screen.dart';
+import 'package:unWrapp/screens/album_detail_screen.dart';
+import 'package:unWrapp/screens/orders_screen.dart';
+import 'package:unWrapp/screens/edit_album_screen.dart';
+import 'package:unWrapp/screens/LoginFormWithValidation.dart';
+import 'package:unWrapp/screens/navigation_home_screen.dart';
+import 'package:unWrapp/screens/templates_selection_screen.dart';
+import 'package:unWrapp/screens/colors_selection_screen.dart';
+import 'package:unWrapp/screens/fonts_selection_screen.dart';
 // import './screens/login_screen.dart';
 // import './screens/registration_screen.dart';
 
@@ -27,12 +32,24 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]).then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness:
+          Platform.isAndroid ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: Colors.white,
+      systemNavigationBarDividerColor: Colors.grey,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ));
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -40,7 +57,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Albums>(
           create: null,
-          update: (ctx, auth, previousProducts) => Albums(
+          update: (context, auth, previousProducts) => Albums(
             auth.token,
             auth.userId,
             previousProducts == null ? [] : previousProducts.items,
@@ -48,7 +65,7 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
           create: null,
-          update: (ctx, auth, previousOrders) => Orders(
+          update: (context, auth, previousOrders) => Orders(
             auth.token,
             auth.userId,
             previousOrders == null ? [] : previousOrders.orders,
@@ -56,16 +73,17 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: Consumer<Auth>(
-        builder: (ctx, auth, _) => MaterialApp(
+        builder: (context, auth, _) => MaterialApp(
           title: 'unWrapp',
           debugShowCheckedModeBanner: false,
           navigatorKey: key,
           theme: ThemeData(
+            //platform: TargetPlatform.android,
             // ef4f4f
             // ee9595
             // ffcda3
             // 74c7b8
-
+            primarySwatch: Colors.blue,
             backgroundColor: Colors.white,
             primaryColor: Color.fromRGBO(244, 67, 54, 1),
             primaryColorLight: Color.fromRGBO(255, 205, 210, 1),
@@ -74,33 +92,8 @@ class MyApp extends StatelessWidget {
             bottomAppBarColor: Color.fromRGBO(189, 189, 189, 1),
             canvasColor: Colors.white,
             //canvasColor: Color.fromRGBO(255, 254, 229, 1),
-            fontFamily: 'Lato',
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  headline1: TextStyle(
-                    color:
-                        Color.fromRGBO(255, 255, 255, 1), //text primary color
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  headline2: TextStyle(
-                    color: Color.fromRGBO(33, 33, 33, 1),
-                    fontWeight: FontWeight.bold,
-                  ),
-                  headline3: TextStyle(
-                    fontSize: 18,
-                    color: Color.fromRGBO(117, 117, 117, 1),
-                    fontWeight: FontWeight.normal,
-                    fontFamily: 'Roboto',
-                  ),
-                  headline4: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Anton',
-                  ),
-                  headline5: TextStyle(
-                    color: Colors.red,
-                    fontFamily: 'Roboto',
-                  ),
-                ),
+
+            textTheme: AppTheme.textTheme,
             pageTransitionsTheme: PageTransitionsTheme(
               builders: {
                 TargetPlatform.android: CustomPageTransitionBuilder(),
@@ -109,29 +102,49 @@ class MyApp extends StatelessWidget {
             ),
           ),
           home: auth.isAuth
-              ? TemplatesOverviewScreen()
+              ? NavigationTemplatesScreen()
+
+              ///  Change this to the final main screen
               : FutureBuilder(
                   future: auth.tryAutoLogin(),
-                  builder: (ctx, authResultSnapshot) =>
+                  builder: (context, authResultSnapshot) =>
                       authResultSnapshot.connectionState ==
                               ConnectionState.waiting
                           ? SplashScreen()
                           : WelcomeScreen(),
                 ),
           routes: {
-            LoginFormValidation.routeName: (ctx) => LoginFormValidation(),
-            CodeScreen.routeName: (ctx) => CodeScreen(),
-            // LoginScreen.routeName: (ctx) => LoginScreen(),
-            // RegistrationScreen.routeName: (ctx) => RegistrationScreen(),
-            TemplatesOverviewScreen.routeName: (ctx) =>
-                TemplatesOverviewScreen(),
-            AlbumsOverviewScreen.routeName: (ctx) => AlbumsOverviewScreen(),
-            ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
-            OrdersScreen.routeName: (ctx) => OrdersScreen(),
-            EditProductScreen.routeName: (ctx) => EditProductScreen(),
+            LoginFormValidation.routeName: (context) => LoginFormValidation(),
+            CodeScreen.routeName: (context) => CodeScreen(),
+            // LoginScreen.routeName: (context) => LoginScreen(),
+            // RegistrationScreen.routeName: (context) => RegistrationScreen(),
+            NavigationHomeScreen.routeName: (context) => NavigationHomeScreen(),
+            NavigationTemplatesScreen.routeName: (context) =>
+                NavigationTemplatesScreen(),
+            NavigationColorsScreen.routeName: (context) =>
+                NavigationColorsScreen(),
+            NavigationFontsScreen.routeName: (context) =>
+                NavigationFontsScreen(),
+
+            AlbumsOverviewScreen.routeName: (context) => AlbumsOverviewScreen(),
+            ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
+            OrdersScreen.routeName: (context) => OrdersScreen(),
+            EditProductScreen.routeName: (context) => EditProductScreen(),
           },
         ),
       ),
     );
+  }
+}
+
+class HexColor extends Color {
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
+
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll('#', '');
+    if (hexColor.length == 6) {
+      hexColor = 'FF' + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
   }
 }

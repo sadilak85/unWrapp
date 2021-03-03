@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
-import '../screens/albums_overview_screen.dart';
-import '../models/template.dart';
+// import 'package:unWrapp/screens/albums_overview_screen.dart';
+// import 'package:unWrapp/models/templatelist.dart';
 
 class TemplateItem extends StatelessWidget {
   final String id;
   final String title;
-  final String tempbackgroundpic;
+  final String appbackgroundpic;
   final String tempbuttonimage;
-  final Color tempbackgroundcolor;
-  final String backgroundcolorname;
+  final Color appbackgroundcolor;
+  final String appbackgroundcolorname;
 
-  TemplateItem(this.id, this.title, this.tempbackgroundpic,
-      this.tempbuttonimage, this.tempbackgroundcolor, this.backgroundcolorname);
+  TemplateItem(this.id, this.title, this.appbackgroundpic, this.tempbuttonimage,
+      this.appbackgroundcolor, this.appbackgroundcolorname);
 
-  void selectCategory(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(
-      AlbumsOverviewScreen.routeName,
-      arguments:
-          ScreenArguments(id, title, tempbackgroundpic, backgroundcolorname),
-    );
-  }
+  void selectCategory(BuildContext context) {}
 
   @override
   Widget build(BuildContext context) {

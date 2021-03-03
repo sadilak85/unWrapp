@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/app_drawer.dart';
-import '../providers/albums.dart';
-import '../models/template.dart';
+import 'package:unWrapp/widgets/app_drawer.dart';
+import 'package:unWrapp/providers/albums.dart';
+import 'package:unWrapp/models/templatelist.dart';
 
 class AlbumsOverviewScreen extends StatefulWidget {
   static const routeName = '/products-overview';
@@ -61,9 +61,9 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
     Navigator.of(context).pop();
   }
 
-  void _startAddNewTransaction(BuildContext ctx) {
+  void _startAddNewTransaction(BuildContext context) {
     showModalBottomSheet(
-      context: ctx,
+      context: context,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
@@ -95,7 +95,8 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
-    _selectedTabTitle = args.title;
+
+    _selectedTabTitle = args.userchoices['title'];
     return Scaffold(
       appBar: AppBar(
         title: Text(_selectedTabTitle),
@@ -114,7 +115,7 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
           : Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(args.tempbackgroundpic),
+                  image: NetworkImage(args.userchoices['appbackgroundpic']),
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
                       Colors.black.withOpacity(0.5), BlendMode.dstATop),

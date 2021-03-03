@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/http_exception.dart';
+import 'package:unWrapp/models/http_exception.dart';
 
 class Auth with ChangeNotifier {
   Duration get loginTime => Duration(milliseconds: 2250);

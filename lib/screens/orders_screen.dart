@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/orders.dart' show Orders;
-import '../widgets/order_item.dart';
-import '../widgets/app_drawer.dart';
+import 'package:unWrapp/providers/orders.dart' show Orders;
+import 'package:unWrapp/widgets/order_item.dart';
+import 'package:unWrapp/widgets/app_drawer.dart';
 
 class OrdersScreen extends StatelessWidget {
   static const routeName = '/orders';
@@ -19,7 +19,7 @@ class OrdersScreen extends StatelessWidget {
       drawer: AppDrawer(),
       body: FutureBuilder(
         future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
-        builder: (ctx, dataSnapshot) {
+        builder: (context, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else {
@@ -31,10 +31,10 @@ class OrdersScreen extends StatelessWidget {
               );
             } else {
               return Consumer<Orders>(
-                builder: (ctx, orderData, child) => ListView.builder(
-                      itemCount: orderData.orders.length,
-                      itemBuilder: (ctx, i) => OrderItem(orderData.orders[i]),
-                    ),
+                builder: (context, orderData, child) => ListView.builder(
+                  itemCount: orderData.orders.length,
+                  itemBuilder: (context, i) => OrderItem(orderData.orders[i]),
+                ),
               );
             }
           }
