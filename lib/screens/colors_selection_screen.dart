@@ -132,8 +132,8 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                       ),
                     ),
                     Text(
-                      '''\n\nSelect a layout of your gift app before starting to create it. 
-                      \n\nTap to open detailed view then click check icon to confirm.''',
+                      '''\n\nSelect a color palette for your gift app. 
+                      \n\nColors are great sources to express someones's feelings''',
                       style: TextStyle(
                         decoration: TextDecoration.none,
                         fontSize: 16,
