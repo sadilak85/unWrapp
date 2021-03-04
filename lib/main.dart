@@ -7,7 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:unWrapp/helpers/custom_route.dart';
 import 'package:unWrapp/helpers/welcomescreen_controller.dart';
-import 'package:unWrapp/helpers/app_theme.dart';
 import 'package:unWrapp/providers/albums.dart';
 import 'package:unWrapp/providers/orders.dart';
 import 'package:unWrapp/providers/auth.dart';
@@ -92,8 +91,6 @@ class MyApp extends StatelessWidget {
             bottomAppBarColor: Color.fromRGBO(189, 189, 189, 1),
             canvasColor: Colors.white,
             //canvasColor: Color.fromRGBO(255, 254, 229, 1),
-
-            textTheme: AppTheme.textTheme,
             pageTransitionsTheme: PageTransitionsTheme(
               builders: {
                 TargetPlatform.android: CustomPageTransitionBuilder(),

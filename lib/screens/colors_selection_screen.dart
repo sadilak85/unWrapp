@@ -112,7 +112,7 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
       barrierLabel: "Barrier",
       barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 200),
       context: context,
       pageBuilder: (_, __, ___) {
         return Align(
@@ -136,7 +136,8 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                       \n\nColors are great sources to express someones's feelings''',
                       style: TextStyle(
                         decoration: TextDecoration.none,
-                        fontSize: 16,
+                        fontFamily: AppTheme.subtitle.fontFamily,
+                        fontSize: 18,
                         color: AppTheme.darkText,
                         fontWeight: FontWeight.w700,
                       ),
@@ -266,7 +267,7 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
               child: Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Choose your color palette',
+                  'Your color palette',
                   style: TextStyle(
                     fontSize: 22,
                     color: AppTheme.darkText,
@@ -337,26 +338,25 @@ class ColorsListView extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           // colorlistData.appbackgroundcolorpalette.asMap().forEach((index, value) => f);
-
-                          color: colorlistData.appbackgroundcolorpalette[0],
+                          color: colorlistData.appbackgroundcolorpalette[3],
                           child: null,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 70.0),
-                          child: Container(
-                            color: colorlistData.appbackgroundcolorpalette[1],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 115.0),
+                        AspectRatio(
+                          aspectRatio: 1.15,
                           child: Container(
                             color: colorlistData.appbackgroundcolorpalette[2],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 150.0),
+                        AspectRatio(
+                          aspectRatio: 1.5,
                           child: Container(
-                            color: colorlistData.appbackgroundcolorpalette[3],
+                            color: colorlistData.appbackgroundcolorpalette[1],
+                          ),
+                        ),
+                        AspectRatio(
+                          aspectRatio: 2.4,
+                          child: Container(
+                            color: colorlistData.appbackgroundcolorpalette[0],
                           ),
                         ),
                       ],

@@ -54,7 +54,25 @@ class AppUserChoiceList {
     ),
     AppUserChoiceList(
       id: 'c5',
+      title: "Teachers' day",
+      appbackgroundpic:
+          'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
+      tempbuttonimage:
+          'https://cdn.pixabay.com/photo/2017/01/09/02/02/pink-wine-1964457_1280.jpg',
+      appbackgroundcolorname: 'cyan',
+    ),
+    AppUserChoiceList(
+      id: 'c6',
       title: "Anniversary",
+      appbackgroundpic:
+          'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
+      tempbuttonimage:
+          'https://cdn.pixabay.com/photo/2017/01/09/02/02/pink-wine-1964457_1280.jpg',
+      appbackgroundcolorname: 'purple',
+    ),
+    AppUserChoiceList(
+      id: 'c7',
+      title: "Proposal",
       appbackgroundpic:
           'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
       tempbuttonimage:
@@ -62,7 +80,7 @@ class AppUserChoiceList {
       appbackgroundcolorname: 'pink',
     ),
     AppUserChoiceList(
-      id: 'c6',
+      id: 'c8',
       title: "Create a design",
       appbackgroundpic:
           'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:unWrapp/screens/navigation_home_screen.dart';
+import 'package:unWrapp/helpers/app_theme.dart';
 
 class LoginFormValidation extends StatefulWidget {
   static const routeName = '/LoginFormValidation-screen';
@@ -169,8 +170,16 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                         height: _deviceSize.height / 14,
                         width: _deviceSize.width / 2,
                         decoration: BoxDecoration(
-                            color: Theme.of(context).primaryColor,
-                            borderRadius: BorderRadius.circular(20)),
+                          color: Theme.of(context).primaryColor,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 2,
+                              color: Colors.black87,
+                              offset: Offset(0, 1),
+                            )
+                          ],
+                        ),
                         child: FlatButton(
                           onPressed: () async {
                             if (loginformkey.currentState.validate()) {
@@ -212,14 +221,8 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 22,
-                              fontFamily: Theme.of(context)
-                                  .textTheme
-                                  .headline2
-                                  .fontFamily,
-                              fontWeight: Theme.of(context)
-                                  .textTheme
-                                  .headline2
-                                  .fontWeight,
+                              fontFamily: AppTheme.title.fontFamily,
+                              fontWeight: AppTheme.title.fontWeight,
                             ),
                           ),
                         ),
@@ -267,14 +270,21 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                             },
                             child: Text(
                               'Create Account',
-                              style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline5.color,
+                              style:
+                                  // TextStyle(
+                                  //   color:
+                                  //       Theme.of(context).textTheme.headline5.color,
+                                  //   fontSize: 15,
+                                  //   fontFamily: Theme.of(context)
+                                  //       .textTheme
+                                  //       .headline5
+                                  //       .fontFamily,
+                                  //   fontWeight: FontWeight.normal,
+                                  // ),
+                                  TextStyle(
+                                color: Colors.redAccent,
                                 fontSize: 15,
-                                fontFamily: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    .fontFamily,
+                                fontFamily: AppTheme.subtitle.fontFamily,
                                 fontWeight: FontWeight.normal,
                               ),
                               softWrap: true,
@@ -288,15 +298,21 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                             child: Text(
                               'Forgot Password?',
                               style: TextStyle(
-                                color:
-                                    Theme.of(context).textTheme.headline5.color,
+                                color: Colors.redAccent,
                                 fontSize: 15,
-                                fontFamily: Theme.of(context)
-                                    .textTheme
-                                    .headline5
-                                    .fontFamily,
+                                fontFamily: AppTheme.subtitle.fontFamily,
                                 fontWeight: FontWeight.normal,
                               ),
+                              // TextStyle(
+                              //   color:
+                              //       Theme.of(context).textTheme.headline5.color,
+                              //   fontSize: 15,
+                              //   fontFamily: Theme.of(context)
+                              //       .textTheme
+                              //       .headline5
+                              //       .fontFamily,
+                              //   fontWeight: FontWeight.normal,
+                              // ),
                               softWrap: true,
                               overflow: TextOverflow.fade,
                             ),

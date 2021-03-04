@@ -115,7 +115,7 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
       barrierLabel: "Barrier",
       barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 200),
       context: context,
       pageBuilder: (_, __, ___) {
         return Align(
@@ -139,7 +139,8 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
                       \n\nAI will make it easy for you to start creation regarding your selection''',
                       style: TextStyle(
                         decoration: TextDecoration.none,
-                        fontSize: 16,
+                        fontFamily: AppTheme.subtitle.fontFamily,
+                        fontSize: 18,
                         color: AppTheme.darkText,
                         fontWeight: FontWeight.w700,
                       ),
@@ -194,7 +195,7 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
                         } else {
                           return GridView(
                             padding: const EdgeInsets.only(
-                                top: 0, left: 12, right: 12),
+                                top: 10, left: 12, right: 12),
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             children: List<Widget>.generate(
@@ -213,6 +214,8 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
                                 return TemplateListView(
                                   animation: animation,
                                   animationController: animationController,
+                                  animationvaluechanger:
+                                      index % 2 == 0 ? 100 : -100,
                                   listData: templateList[index],
                                   callBack: () {
                                     Navigator.of(context).pushNamed(
@@ -232,7 +235,7 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
                             ),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
+                              crossAxisCount: 2,
                               mainAxisSpacing: 15.0,
                               crossAxisSpacing: 15.0,
                               childAspectRatio: 1.5,
@@ -311,13 +314,15 @@ class TemplateListView extends StatelessWidget {
       this.listData,
       this.callBack,
       this.animationController,
-      this.animation})
+      this.animation,
+      this.animationvaluechanger})
       : super(key: key);
 
   final AppUserChoiceList listData;
   final VoidCallback callBack;
   final AnimationController animationController;
   final Animation<dynamic> animation;
+  final int animationvaluechanger;
 
   @override
   Widget build(BuildContext context) {
@@ -328,48 +333,44 @@ class TemplateListView extends StatelessWidget {
           opacity: animation,
           child: Transform(
             transform: Matrix4.translationValues(
-                0.0, 50 * (1.0 - animation.value), 0.0),
+                animationvaluechanger * (1.0 - animation.value), 0.0, 0.0),
             child: AspectRatio(
               aspectRatio: 1.5,
               child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(14.0)),
                 child: Stack(
-                  alignment: AlignmentDirectional.center,
+                  // alignment: AlignmentDirectional.center,
                   children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        Image.network(
-                          listData.tempbuttonimage,
-                          fit: BoxFit.cover,
-                        ),
-                        Align(
-                          alignment: Alignment.bottomRight,
+                    Image.network(
+                      listData.tempbuttonimage,
+                      fit: BoxFit.cover,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Container(
+                          color: Colors.black45,
                           child: Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Container(
-                              color: Colors.black45,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  listData.title,
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              listData.title,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
                         splashColor: Colors.grey.withOpacity(0.2),
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
+                            const BorderRadius.all(Radius.circular(14.0)),
                         onTap: () {
                           callBack();
                         },

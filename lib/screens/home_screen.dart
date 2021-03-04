@@ -37,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       barrierLabel: "Barrier",
       barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 200),
       context: context,
       pageBuilder: (_, __, ___) {
         return Align(
@@ -61,7 +61,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                       \n\nTap to open detailed view then click check icon to confirm.''',
                       style: TextStyle(
                         decoration: TextDecoration.none,
-                        fontSize: 16,
+                        fontFamily: AppTheme.subtitle.fontFamily,
+                        fontSize: 18,
                         color: AppTheme.darkText,
                         fontWeight: FontWeight.w700,
                       ),

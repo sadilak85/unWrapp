@@ -121,7 +121,7 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
       barrierLabel: "Barrier",
       barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 500),
+      transitionDuration: Duration(milliseconds: 200),
       context: context,
       pageBuilder: (_, __, ___) {
         return Align(
@@ -145,7 +145,8 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                       \n\nTap to open detailed view then click check icon to confirm.''',
                       style: TextStyle(
                         decoration: TextDecoration.none,
-                        fontSize: 16,
+                        fontFamily: AppTheme.subtitle.fontFamily,
+                        fontSize: 18,
                         color: AppTheme.darkText,
                         fontWeight: FontWeight.w700,
                       ),
@@ -242,7 +243,7 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                               crossAxisCount: 1,
                               mainAxisSpacing: 15.0,
                               crossAxisSpacing: 15.0,
-                              childAspectRatio: 2.5,
+                              childAspectRatio: 2,
                             ),
                           );
                         }
@@ -276,7 +277,7 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
               child: Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Choose your font style',
+                  'Your font style',
                   style: TextStyle(
                     fontSize: 22,
                     color: AppTheme.darkText,
@@ -337,7 +338,7 @@ class FontsListView extends StatelessWidget {
             transform: Matrix4.translationValues(
                 0.0, 50 * (1.0 - animation.value), 0.0),
             child: AspectRatio(
-              aspectRatio: 1.5,
+              aspectRatio: 2,
               child: Container(
                 color: Colors.red.shade100,
                 child: ClipRRect(
@@ -360,40 +361,34 @@ class FontsListView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            child: Text(
-                              'Fonts have also feelings',
-                              style: GoogleFonts.getFont(
-                                fontslistData,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              softWrap: true,
-                              overflow: TextOverflow.fade,
+                          Text(
+                            'Fonts have also feelings',
+                            style: GoogleFonts.getFont(
+                              fontslistData,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                             ),
+                            softWrap: true,
+                            overflow: TextOverflow.fade,
                           ),
-                          Container(
-                            child: Text(
-                              'Fonts have also feelings',
-                              style: GoogleFonts.getFont(
-                                fontslistData,
-                                fontSize: 22,
-                              ),
-                              softWrap: true,
-                              overflow: TextOverflow.fade,
+                          Text(
+                            'Fonts have also feelings',
+                            style: GoogleFonts.getFont(
+                              fontslistData,
+                              fontSize: 22,
                             ),
+                            softWrap: true,
+                            overflow: TextOverflow.fade,
                           ),
-                          Container(
-                            child: Text(
-                              'Fonts have also feelings',
-                              style: GoogleFonts.getFont(
-                                fontslistData,
-                                fontSize: 22,
-                                fontStyle: FontStyle.italic,
-                              ),
-                              softWrap: true,
-                              overflow: TextOverflow.fade,
+                          Text(
+                            'Fonts have also feelings',
+                            style: GoogleFonts.getFont(
+                              fontslistData,
+                              fontSize: 22,
+                              fontStyle: FontStyle.italic,
                             ),
+                            softWrap: true,
+                            overflow: TextOverflow.fade,
                           ),
                         ],
                       ),

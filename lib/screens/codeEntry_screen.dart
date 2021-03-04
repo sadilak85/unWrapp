@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:unWrapp/screens/navigation_home_screen.dart';
+import 'package:unWrapp/helpers/app_theme.dart';
 
 class CodeScreen extends StatefulWidget {
   static const routeName = '/code-screen';
@@ -111,9 +112,9 @@ class _CodeScreenState extends State<CodeScreen> {
                             borderRadius: BorderRadius.circular(20),
                             boxShadow: [
                               BoxShadow(
-                                blurRadius: 10,
+                                blurRadius: 2,
                                 color: Colors.black87,
-                                offset: Offset(0, 2),
+                                offset: Offset(0, 1),
                               )
                             ],
                           ),
@@ -165,14 +166,12 @@ class _CodeScreenState extends State<CodeScreen> {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
-                                fontFamily: Theme.of(context)
-                                    .textTheme
-                                    .headline2
-                                    .fontFamily,
-                                fontWeight: Theme.of(context)
-                                    .textTheme
-                                    .headline2
-                                    .fontWeight,
+                                fontFamily: AppTheme.title.fontFamily,
+                                fontWeight: AppTheme.title.fontWeight,
+                                // fontWeight: Theme.of(context)
+                                //     .textTheme
+                                //     .headline2
+                                //     .fontWeight,
                               ),
                             ),
                           ),
@@ -201,10 +200,7 @@ class _CodeScreenState extends State<CodeScreen> {
                           style: TextStyle(
                             color: Colors.redAccent,
                             fontSize: 15,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .headline5
-                                .fontFamily,
+                            fontFamily: AppTheme.subtitle.fontFamily,
                             fontWeight: FontWeight.normal,
                           ),
                           softWrap: true,
