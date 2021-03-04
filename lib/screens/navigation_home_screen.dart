@@ -5,7 +5,7 @@ import 'package:unWrapp/custom_drawer/home_drawer.dart';
 import 'package:unWrapp/screens/home_screen.dart';
 import 'package:unWrapp/screens/drawer_help_screen.dart';
 import 'package:unWrapp/screens/drawer_share_screen.dart';
-import 'package:unWrapp/screens/drawer_about_screen.dart';
+import 'package:unWrapp/screens/drawer_contact_screen.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   static const routeName = '/navigationhome-screen';
@@ -63,9 +63,9 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         setState(() {
           screenView = ShareScreen();
         });
-      } else if (drawerIndex == DrawerIndex.About) {
+      } else if (drawerIndex == DrawerIndex.Contact) {
         setState(() {
-          screenView = AboutScreen();
+          screenView = ContactScreen();
         });
       } else {
         //do in your way......

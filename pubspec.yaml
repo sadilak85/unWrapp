@@ -29,7 +29,7 @@ dependencies:
   shared_preferences: ^0.5.12+4
   flutter_login: ^1.0.14
   form_field_validator: ^1.0.1
-
+  google_fonts: ^1.1.2
   firebase_core: ^0.7.0
   firebase_auth: ^0.20.1
   cloud_firestore: ^0.16.0+1
@@ -91,6 +91,7 @@ flutter:
         - asset: assets/fonts/Roboto-Regular.ttf
         - asset: assets/fonts/Roboto-Medium.ttf
           weight: 400
+   
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

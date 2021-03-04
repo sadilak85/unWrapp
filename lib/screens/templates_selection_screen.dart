@@ -6,7 +6,7 @@ import 'package:unWrapp/custom_drawer/drawer_user_controller.dart';
 import 'package:unWrapp/custom_drawer/home_drawer.dart';
 import 'package:unWrapp/screens/colors_selection_screen.dart';
 import 'package:unWrapp/screens/drawer_share_screen.dart';
-import 'package:unWrapp/screens/drawer_about_screen.dart';
+import 'package:unWrapp/screens/drawer_contact_screen.dart';
 import 'package:unWrapp/screens/drawer_help_screen.dart';
 
 class NavigationTemplatesScreen extends StatefulWidget {
@@ -66,9 +66,9 @@ class _NavigationTemplatesScreenState extends State<NavigationTemplatesScreen> {
         setState(() {
           screenView = ShareScreen();
         });
-      } else if (drawerIndex == DrawerIndex.About) {
+      } else if (drawerIndex == DrawerIndex.Contact) {
         setState(() {
-          screenView = AboutScreen();
+          screenView = ContactScreen();
         });
       } else {
         //do in your way......
@@ -233,8 +233,8 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
-                              mainAxisSpacing: 12.0,
-                              crossAxisSpacing: 12.0,
+                              mainAxisSpacing: 15.0,
+                              crossAxisSpacing: 15.0,
                               childAspectRatio: 1.5,
                             ),
                           );
@@ -415,7 +415,7 @@ class TemplateListView extends StatelessWidget {
 //                           catData.title,
 //                           catData.appbackgroundpic,
 //                           catData.tempbuttonimage,
-//                           catData.appbackgroundcolor,
+//                           catData.appbackgroundcolorpalette,
 //                           catData.appbackgroundcolorname,
 //                         ),
 //                       )

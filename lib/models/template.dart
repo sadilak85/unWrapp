@@ -8,7 +8,7 @@ const TEMPLATES = const [
         'https://images.pexels.com/photos/704748/pexels-photo-704748.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     tempbuttonimage:
         'https://images.pexels.com/photos/6478949/pexels-photo-6478949.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    appbackgroundcolor: Colors.red,
+    appbackgroundcolorpalette: Colors.red,
     appbackgroundcolorname: 'red',
   ),
   Template(
@@ -18,7 +18,7 @@ const TEMPLATES = const [
         'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
     tempbuttonimage:
         'https://cdn.pixabay.com/photo/2014/06/30/11/40/birthday-cake-380178_1280.jpg',
-    appbackgroundcolor: Colors.yellow,
+    appbackgroundcolorpalette: Colors.yellow,
     appbackgroundcolorname: 'yellow',
   ),
   Template(
@@ -28,7 +28,7 @@ const TEMPLATES = const [
         'https://images.pexels.com/photos/776635/pexels-photo-776635.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     tempbuttonimage:
         'https://images.pexels.com/photos/867462/pexels-photo-867462.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    appbackgroundcolor: Colors.green,
+    appbackgroundcolorpalette: Colors.green,
     appbackgroundcolorname: 'green',
   ),
   Template(
@@ -38,7 +38,7 @@ const TEMPLATES = const [
         'https://images.pexels.com/photos/4618653/pexels-photo-4618653.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
     tempbuttonimage:
         'https://images.pexels.com/photos/2312124/pexels-photo-2312124.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-    appbackgroundcolor: Colors.blue,
+    appbackgroundcolorpalette: Colors.blue,
     appbackgroundcolorname: 'blue',
   ),
   Template(
@@ -48,7 +48,7 @@ const TEMPLATES = const [
         'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
     tempbuttonimage:
         'https://cdn.pixabay.com/photo/2017/01/09/02/02/pink-wine-1964457_1280.jpg',
-    appbackgroundcolor: Colors.pink,
+    appbackgroundcolorpalette: Colors.pink,
     appbackgroundcolorname: 'pink',
   ),
   Template(
@@ -58,7 +58,7 @@ const TEMPLATES = const [
         'https://www.iihs.org/media/3750e123-dbe4-4e00-8df2-8c4c054c7b60/5shZNw/Ratings/About%20our%20tests/BioRID.jpg',
     tempbuttonimage:
         'https://cdn.pixabay.com/photo/2017/03/12/13/41/beaded-2137080_1280.jpg',
-    appbackgroundcolor: Colors.white,
+    appbackgroundcolorpalette: Colors.white,
     appbackgroundcolorname: 'white',
   ),
 ];
@@ -68,7 +68,7 @@ class Template {
   final String title;
   final String appbackgroundpic;
   final String tempbuttonimage;
-  final Color appbackgroundcolor;
+  final Color appbackgroundcolorpalette;
   final String appbackgroundcolorname;
 
   const Template({
@@ -76,7 +76,7 @@ class Template {
     @required this.title,
     @required this.appbackgroundpic,
     @required this.tempbuttonimage,
-    @required this.appbackgroundcolor,
+    @required this.appbackgroundcolorpalette,
     @required this.appbackgroundcolorname,
   });
 }

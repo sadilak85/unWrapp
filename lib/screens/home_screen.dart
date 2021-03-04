@@ -151,8 +151,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
-                              mainAxisSpacing: 12.0,
-                              crossAxisSpacing: 12.0,
+                              mainAxisSpacing: 15.0,
+                              crossAxisSpacing: 15.0,
                               childAspectRatio: 1.5,
                             ),
                           );

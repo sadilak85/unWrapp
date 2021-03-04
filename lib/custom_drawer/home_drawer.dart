@@ -34,18 +34,18 @@ class _HomeDrawerState extends State<HomeDrawer> {
       ),
       DrawerList(
         index: DrawerIndex.Help,
-        labelName: 'Help',
+        labelName: 'Need Help?',
         isAssetsImage: true,
         imageName: 'assets/images/supportIcon.png',
       ),
       DrawerList(
         index: DrawerIndex.Share,
-        labelName: 'Share the app',
+        labelName: 'Share this App.',
         icon: Icon(Icons.share),
       ),
       DrawerList(
-        index: DrawerIndex.About,
-        labelName: 'About Us',
+        index: DrawerIndex.Contact,
+        labelName: 'Contact Us.',
         icon: Icon(Icons.info),
       ),
     ];
@@ -201,7 +201,7 @@ enum DrawerIndex {
   HOME,
   Help,
   Share,
-  About,
+  Contact,
 }
 
 class DrawerList {

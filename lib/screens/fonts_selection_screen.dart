@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:unWrapp/helpers/app_theme.dart';
 import 'package:unWrapp/models/templatelist.dart';
-// import 'package:unWrapp/widgets/template_item.dart';
+import 'package:unWrapp/models/fontslist.dart';
 import 'package:unWrapp/custom_drawer/drawer_user_controller.dart';
 import 'package:unWrapp/custom_drawer/home_drawer.dart';
 import 'package:unWrapp/screens/albums_overview_screen.dart';
 import 'package:unWrapp/screens/drawer_help_screen.dart';
 import 'package:unWrapp/screens/drawer_share_screen.dart';
-import 'package:unWrapp/screens/drawer_about_screen.dart';
+import 'package:unWrapp/screens/drawer_contact_screen.dart';
 
 class NavigationFontsScreen extends StatefulWidget {
   static const routeName = '/fonts-selection-screen';
@@ -65,9 +66,9 @@ class _NavigationFontsScreenState extends State<NavigationFontsScreen> {
         setState(() {
           screenView = ShareScreen();
         });
-      } else if (drawerIndex == DrawerIndex.About) {
+      } else if (drawerIndex == DrawerIndex.Contact) {
         setState(() {
-          screenView = AboutScreen();
+          screenView = ContactScreen();
         });
       } else {
         //do in your way......
@@ -85,13 +86,13 @@ class FontsOverviewScreen extends StatefulWidget {
 
 class _FontsOverviewScreenState extends State<FontsOverviewScreen>
     with TickerProviderStateMixin {
-  List<AppUserChoiceList> templateList = AppUserChoiceList.templateList;
+  List<String> userFontsList = UserSelectionFonts.userFontsList;
 
   Map<String, String> userchoices = {
     'title': '',
     'appbackgroundpic': '',
     'appbackgroundcolorname': '',
-    'appfont': '',
+    'userFontsList': '',
   };
 
   AnimationController animationController;
@@ -199,13 +200,13 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                         } else {
                           return GridView(
                             padding: const EdgeInsets.only(
-                                top: 0, left: 12, right: 12),
+                                top: 10, left: 25, right: 25),
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             children: List<Widget>.generate(
-                              templateList.length,
+                              userFontsList.length,
                               (int index) {
-                                final int count = templateList.length;
+                                final int count = userFontsList.length;
                                 final Animation<double> animation =
                                     Tween<double>(begin: 0.0, end: 1.0).animate(
                                   CurvedAnimation(
@@ -215,10 +216,10 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                                   ),
                                 );
                                 animationController.forward();
-                                return TemplateListView(
+                                return FontsListView(
                                   animation: animation,
                                   animationController: animationController,
-                                  listData: templateList[index],
+                                  fontslistData: userFontsList[index],
                                   callBack: () {
                                     Navigator.of(context).pushNamed(
                                       AlbumsOverviewScreen.routeName,
@@ -229,7 +230,7 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                                     //   context,
                                     //   MaterialPageRoute<dynamic>(
                                     //     builder: (BuildContext context) =>
-                                    //         templateList[index].navigateScreen,
+                                    //         userFontsList[index].navigateScreen,
                                     //   ),
                                     // );
                                   },
@@ -239,9 +240,9 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1,
-                              mainAxisSpacing: 12.0,
-                              crossAxisSpacing: 12.0,
-                              childAspectRatio: 1.5,
+                              mainAxisSpacing: 15.0,
+                              crossAxisSpacing: 15.0,
+                              childAspectRatio: 2.5,
                             ),
                           );
                         }
@@ -311,16 +312,16 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
   }
 }
 
-class TemplateListView extends StatelessWidget {
-  const TemplateListView(
+class FontsListView extends StatelessWidget {
+  const FontsListView(
       {Key key,
-      this.listData,
+      this.fontslistData,
       this.callBack,
       this.animationController,
       this.animation})
       : super(key: key);
 
-  final AppUserChoiceList listData;
+  final String fontslistData;
   final VoidCallback callBack;
   final AnimationController animationController;
   final Animation<dynamic> animation;
@@ -337,51 +338,67 @@ class TemplateListView extends StatelessWidget {
                 0.0, 50 * (1.0 - animation.value), 0.0),
             child: AspectRatio(
               aspectRatio: 1.5,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                child: Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: <Widget>[
-                    Stack(
-                      children: <Widget>[
-                        Image.network(
-                          listData.tempbuttonimage,
-                          fit: BoxFit.cover,
+              child: Container(
+                color: Colors.red.shade100,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: <Widget>[
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          splashColor: Colors.grey.withOpacity(0.2),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(4.0)),
+                          onTap: () {
+                            callBack();
+                          },
                         ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Container(
-                              color: Colors.black45,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  listData.title,
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Fonts have also feelings',
+                              style: GoogleFonts.getFont(
+                                fontslistData,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
                               ),
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        splashColor: Colors.grey.withOpacity(0.2),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4.0)),
-                        onTap: () {
-                          callBack();
-                        },
+                          Container(
+                            child: Text(
+                              'Fonts have also feelings',
+                              style: GoogleFonts.getFont(
+                                fontslistData,
+                                fontSize: 22,
+                              ),
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              'Fonts have also feelings',
+                              style: GoogleFonts.getFont(
+                                fontslistData,
+                                fontSize: 22,
+                                fontStyle: FontStyle.italic,
+                              ),
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

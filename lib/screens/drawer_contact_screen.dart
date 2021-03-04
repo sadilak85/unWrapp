@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:unWrapp/helpers/app_theme.dart';
 
-class AboutScreen extends StatefulWidget {
+class ContactScreen extends StatefulWidget {
   @override
-  _AboutScreenState createState() => _AboutScreenState();
+  _ContactScreenState createState() => _ContactScreenState();
 }
 
-class _AboutScreenState extends State<AboutScreen> {
+class _ContactScreenState extends State<ContactScreen> {
   @override
   void initState() {
     super.initState();
@@ -32,7 +32,7 @@ class _AboutScreenState extends State<AboutScreen> {
               Container(
                 padding: const EdgeInsets.only(top: 8),
                 child: Text(
-                  'About this App',
+                  'Contact with us',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

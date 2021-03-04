@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:unWrapp/helpers/app_theme.dart';
-import 'package:unWrapp/models/templatelist.dart';
-// import 'package:unWrapp/widgets/template_item.dart';
+import 'package:unWrapp/models/colorpalette.dart';
 import 'package:unWrapp/custom_drawer/drawer_user_controller.dart';
 import 'package:unWrapp/custom_drawer/home_drawer.dart';
 import 'package:unWrapp/screens/fonts_selection_screen.dart';
 import 'package:unWrapp/screens/drawer_share_screen.dart';
-import 'package:unWrapp/screens/drawer_about_screen.dart';
+import 'package:unWrapp/screens/drawer_contact_screen.dart';
 import 'package:unWrapp/screens/drawer_help_screen.dart';
 
 class NavigationColorsScreen extends StatefulWidget {
@@ -65,9 +64,9 @@ class _NavigationColorsScreenState extends State<NavigationColorsScreen> {
         setState(() {
           screenView = ShareScreen();
         });
-      } else if (drawerIndex == DrawerIndex.About) {
+      } else if (drawerIndex == DrawerIndex.Contact) {
         setState(() {
-          screenView = AboutScreen();
+          screenView = ContactScreen();
         });
       } else {
         //do in your way......
@@ -85,7 +84,7 @@ class ColorsOverviewScreen extends StatefulWidget {
 
 class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
     with TickerProviderStateMixin {
-  List<AppUserChoiceList> templateList = AppUserChoiceList.templateList;
+  List<UserColorPalette> colorPaletteList = UserColorPalette.colorPaletteList;
 
   AnimationController animationController;
   // bool multiple = true;
@@ -196,9 +195,9 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             children: List<Widget>.generate(
-                              templateList.length,
+                              colorPaletteList.length,
                               (int index) {
-                                final int count = templateList.length;
+                                final int count = colorPaletteList.length;
                                 final Animation<double> animation =
                                     Tween<double>(begin: 0.0, end: 1.0).animate(
                                   CurvedAnimation(
@@ -208,10 +207,10 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                                   ),
                                 );
                                 animationController.forward();
-                                return TemplateListView(
+                                return ColorsListView(
                                   animation: animation,
                                   animationController: animationController,
-                                  listData: templateList[index],
+                                  colorlistData: colorPaletteList[index],
                                   callBack: () {
                                     Navigator.of(context).pushNamed(
                                       NavigationFontsScreen.routeName,
@@ -221,7 +220,7 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                                     //   context,
                                     //   MaterialPageRoute<dynamic>(
                                     //     builder: (BuildContext context) =>
-                                    //         templateList[index].navigateScreen,
+                                    //         colorPaletteList[index].navigateScreen,
                                     //   ),
                                     // );
                                   },
@@ -230,10 +229,10 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                             ),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
-                              mainAxisSpacing: 12.0,
-                              crossAxisSpacing: 12.0,
-                              childAspectRatio: 1.5,
+                              crossAxisCount: 2,
+                              mainAxisSpacing: 20.0,
+                              crossAxisSpacing: 20.0,
+                              childAspectRatio: 1.0,
                             ),
                           );
                         }
@@ -267,7 +266,7 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
               child: Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: Text(
-                  'Choose your color',
+                  'Choose your color palette',
                   style: TextStyle(
                     fontSize: 22,
                     color: AppTheme.darkText,
@@ -303,16 +302,16 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
   }
 }
 
-class TemplateListView extends StatelessWidget {
-  const TemplateListView(
+class ColorsListView extends StatelessWidget {
+  const ColorsListView(
       {Key key,
-      this.listData,
+      this.colorlistData,
       this.callBack,
       this.animationController,
       this.animation})
       : super(key: key);
 
-  final AppUserChoiceList listData;
+  final UserColorPalette colorlistData;
   final VoidCallback callBack;
   final AnimationController animationController;
   final Animation<dynamic> animation;
@@ -337,26 +336,27 @@ class TemplateListView extends StatelessWidget {
                     Stack(
                       children: <Widget>[
                         Container(
-                          color: listData.appbackgroundcolor,
+                          // colorlistData.appbackgroundcolorpalette.asMap().forEach((index, value) => f);
+
+                          color: colorlistData.appbackgroundcolorpalette[0],
+                          child: null,
                         ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Container(
-                              color: Colors.black45,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  listData.title,
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 70.0),
+                          child: Container(
+                            color: colorlistData.appbackgroundcolorpalette[1],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 115.0),
+                          child: Container(
+                            color: colorlistData.appbackgroundcolorpalette[2],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 150.0),
+                          child: Container(
+                            color: colorlistData.appbackgroundcolorpalette[3],
                           ),
                         ),
                       ],
