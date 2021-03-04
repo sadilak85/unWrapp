@@ -339,7 +339,6 @@ class ColorsListView extends StatelessWidget {
                         Container(
                           // colorlistData.appbackgroundcolorpalette.asMap().forEach((index, value) => f);
                           color: colorlistData.appbackgroundcolorpalette[3],
-                          child: null,
                         ),
                         AspectRatio(
                           aspectRatio: 1.15,

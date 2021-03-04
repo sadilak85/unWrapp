@@ -235,7 +235,7 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
                             ),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
+                              crossAxisCount: 1,
                               mainAxisSpacing: 15.0,
                               crossAxisSpacing: 15.0,
                               childAspectRatio: 1.5,
