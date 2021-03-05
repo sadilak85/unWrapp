@@ -9,11 +9,11 @@ Give him/her a self made, personalized app as a present or suprise!
 1) There are two parties, one is the creator (sender) and the other one is receiver.
 2) The receiver obtains a code created automatic after finalizing the personal app by the creator (sender):
 
-<img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page1.png" width="30%"> <img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page1_rev.png" width="50%">
+<img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page1.png" width="30%">
 
 3) The "sender" must swipe to the login page to create the app:
 
-<img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page2.png" width="30%"> <img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page2_rev.png" width="50%">
+<img src="https://github.com/sadilak85/unWrapp/blob/main/git_pics/Page2.png" width="30%"> 
 
 4) Login is crucial for Firebase Authentication (Email/Pass). 
 5) After login, user selects a template to ease the pain, or select to do it from scratch (Create a design)
