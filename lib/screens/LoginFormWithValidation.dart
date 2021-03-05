@@ -72,8 +72,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/welcomelogo.png'),
-              fit: BoxFit.cover),
+              image: AssetImage('assets/images/logo.png'), fit: BoxFit.contain),
         ),
         child: ModalProgressHUD(
           inAsyncCall: showSpinner,
