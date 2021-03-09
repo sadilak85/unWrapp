@@ -64,16 +64,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
-<<<<<<< HEAD
-  convert:
-    dependency: transitive
-    description:
-      name: convert
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.1"
-=======
->>>>>>> ChangeNotifierProxyProvider
   crypto:
     dependency: transitive
     description:
@@ -480,10 +470,5 @@ packages:
     source: hosted
     version: "0.1.2"
 sdks:
-<<<<<<< HEAD
-  dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.17.0"
-=======
   dart: ">=2.12.0-259.9.beta <3.0.0"
   flutter: ">=1.20.0"
->>>>>>> ChangeNotifierProxyProvider
