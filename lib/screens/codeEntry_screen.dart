@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:unWrapp/screens/navigation_home_screen.dart';
 import 'package:unWrapp/helpers/app_theme.dart';
@@ -13,7 +13,7 @@ class CodeScreen extends StatefulWidget {
 class _CodeScreenState extends State<CodeScreen> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   bool showSpinner = false;
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
 
   Map<String, String> _authData = {
     'specialkey': null,
@@ -26,7 +26,7 @@ class _CodeScreenState extends State<CodeScreen> {
         title: Text('An Error Occurred!'),
         content: Text(message),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('Okay'),
             onPressed: () {
               Navigator.of(context).pop();
@@ -117,7 +117,7 @@ class _CodeScreenState extends State<CodeScreen> {
                               )
                             ],
                           ),
-                          child: FlatButton(
+                          child: TextButton(
                             onPressed: () async {
                               if (formkey.currentState.validate()) {
                                 setState(() {

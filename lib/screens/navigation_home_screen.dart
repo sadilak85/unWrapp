@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:unWrapp/helpers/app_theme.dart';
 import 'package:unWrapp/custom_drawer/drawer_user_controller.dart';
 import 'package:unWrapp/custom_drawer/home_drawer.dart';
@@ -6,6 +7,8 @@ import 'package:unWrapp/screens/home_screen.dart';
 import 'package:unWrapp/screens/drawer_help_screen.dart';
 import 'package:unWrapp/screens/drawer_share_screen.dart';
 import 'package:unWrapp/screens/drawer_contact_screen.dart';
+import 'package:unWrapp/helpers/welcomescreen_controller.dart';
+import 'package:unWrapp/providers/auth.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   static const routeName = '/navigationhome-screen';
@@ -67,6 +70,9 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         setState(() {
           screenView = ContactScreen();
         });
+      } else if (drawerIndex == DrawerIndex.Logout) {
+        Navigator.of(context).pushNamed(WelcomeScreen.routeName);
+        Provider.of<Auth>(context, listen: false).logout();
       } else {
         //do in your way......
       }

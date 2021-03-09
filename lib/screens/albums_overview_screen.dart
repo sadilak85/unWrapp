@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:unWrapp/widgets/app_drawer.dart';
-import 'package:unWrapp/providers/albums.dart';
 import 'package:unWrapp/models/templatelist.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:unWrapp/widgets/productItem.dart';
 
 class AlbumsOverviewScreen extends StatefulWidget {
   static const routeName = '/products-overview';
@@ -13,115 +12,76 @@ class AlbumsOverviewScreen extends StatefulWidget {
 }
 
 class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
-  var _isInit = true;
   var _isLoading = false;
   String _selectedTabTitle;
-  final _titleController = TextEditingController();
 
-  @override
-  void initState() {
-    // Provider.of<Albums>(context).fetchAndSetAlbums(); // WON'T WORK!
-    // Future.delayed(Duration.zero).then((_) {
-    //   Provider.of<Albums>(context).fetchAndSetAlbums();
-    // });
-
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<Albums>(context).fetchAndSetAlbums().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-    _isInit = false;
-    super.didChangeDependencies();
-  }
-
-  // void _changeTabTitle(String title) {
-  //   setState(() {
-  //     _selectedTabTitle = title;
-  //   });
-  // }
-
-  void _submitData() {
-    final enteredTitle = _titleController.text;
-    if (enteredTitle.isEmpty) {
-      return;
-    }
-    setState(() {
-      _selectedTabTitle = enteredTitle;
+  Future<void> uploadingData(String _id, String _title,
+      String _appbackgroundcolorname, String _appbackgroundpic) async {
+    await FirebaseFirestore.instance.collection("templates").add({
+      'id': _id,
+      'title': _title,
+      'appbackgroundcolorname': _appbackgroundcolorname,
+      'appbackgroundpic': _appbackgroundpic,
     });
-    Navigator.of(context).pop();
   }
 
-  void _startAddNewTransaction(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (_) {
-        return GestureDetector(
-          onTap: () {},
-          child: Card(
-            elevation: 5,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(labelText: 'Title'),
-                    controller: _titleController,
-                    onSubmitted: (_) => _submitData(),
-                    // onChanged: (val) {
-                    //   titleInput = val;
-                    // },
-                  ),
-                ],
-              ),
-            ),
-          ),
-          behavior: HitTestBehavior.opaque,
-        );
-      },
-    );
+  Future<void> getData() async {
+    print('ssdfah');
+    FirebaseFirestore.instance
+        .collection('templates')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              querySnapshot.docs.forEach((doc) {
+                print(doc["layoutType"]);
+              }),
+            });
   }
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference _collection =
+        FirebaseFirestore.instance.collection('templates');
+
     final ScreenArguments args = ModalRoute.of(context).settings.arguments;
 
     _selectedTabTitle = args.userchoices['title'];
     return Scaffold(
       appBar: AppBar(
-        title: Text(_selectedTabTitle),
+        title: Text('_selectedTabTitle'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => _startAddNewTransaction(context),
+            onPressed: null,
           ),
         ],
       ),
       drawer: AppDrawer(),
-      body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(args.userchoices['appbackgroundpic']),
-                  fit: BoxFit.cover,
-                  colorFilter: ColorFilter.mode(
-                      Colors.black.withOpacity(0.5), BlendMode.dstATop),
-                ),
-              ),
-              child: null),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: _collection.snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          final templateDocs = snapshot.data.docs;
+          return !snapshot.hasData
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, index) => ProductItem(
+                    layoutType: templateDocs[index].data()['layoutType'],
+                    fontStyle: templateDocs[index].data()['fontStyle'],
+                    celebrationType:
+                        templateDocs[index].data()['celebrationType'],
+                    colorPalette: templateDocs[index].data()['colorPalette'],
+                  ),
+                );
+        },
+      ),
     );
   }
 }

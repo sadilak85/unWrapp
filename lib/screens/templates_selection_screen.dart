@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:unWrapp/helpers/app_theme.dart';
 import 'package:unWrapp/models/templatelist.dart';
-// import 'package:unWrapp/widgets/template_item.dart';
 import 'package:unWrapp/custom_drawer/drawer_user_controller.dart';
 import 'package:unWrapp/custom_drawer/home_drawer.dart';
 import 'package:unWrapp/screens/colors_selection_screen.dart';
 import 'package:unWrapp/screens/drawer_share_screen.dart';
 import 'package:unWrapp/screens/drawer_contact_screen.dart';
 import 'package:unWrapp/screens/drawer_help_screen.dart';
+import 'package:unWrapp/helpers/welcomescreen_controller.dart';
+import 'package:unWrapp/providers/auth.dart';
 
 class NavigationTemplatesScreen extends StatefulWidget {
   static const routeName = '/templates-selection-screen';
@@ -70,6 +72,9 @@ class _NavigationTemplatesScreenState extends State<NavigationTemplatesScreen> {
         setState(() {
           screenView = ContactScreen();
         });
+      } else if (drawerIndex == DrawerIndex.Logout) {
+        Navigator.of(context).pushNamed(WelcomeScreen.routeName);
+        Provider.of<Auth>(context, listen: false).logout();
       } else {
         //do in your way......
       }

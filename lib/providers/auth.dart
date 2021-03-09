@@ -1,100 +1,101 @@
+import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'dart:async';
-
+//import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:unWrapp/models/http_exception.dart';
-
 class Auth with ChangeNotifier {
-  Duration get loginTime => Duration(milliseconds: 2250);
-  String _token;
-  DateTime _expiryDate;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   String _userId;
-  Timer _authTimer;
 
   bool get isAuth {
-    return token != null;
-  }
-
-  String get token {
-    if (_expiryDate != null &&
-        _expiryDate.isAfter(DateTime.now()) &&
-        _token != null) {
-      return _token;
+    if (_auth.currentUser?.uid == null) {
+      print('dead auth');
+      print(_auth.currentUser);
+      return false;
+    } else {
+      print('already auth');
+      print(_auth.currentUser);
+      return true;
     }
-    return null;
   }
 
   String get userId {
     return _userId;
   }
 
-  Future<void> _authenticate(
-      String email, String password, String urlSegment) async {
-    final url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=AIzaSyBq3QzvbOcICI63Amjk7r2fcHhQm38F0yo';
+  Future<String> handleSignInEmail(String email, String password) async {
     try {
-      final response = await http.post(
-        url,
-        body: json.encode(
-          {
-            'email': email,
-            'password': password,
-            'returnSecureToken': true,
-          },
-        ),
-      );
+      UserCredential result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      final User user = result.user;
 
-      final responseData = json.decode(response.body);
-      if (responseData['error'] != null) {
-        throw HttpException(responseData['error']['message']);
-      }
-
-      _token = responseData['idToken'];
-      _userId = responseData['localId'];
-      _expiryDate = DateTime.now().add(
-        Duration(
-          seconds: int.parse(
-            responseData['expiresIn'],
-          ),
-        ),
-      );
-
-      _autoLogout();
+      _userId = _auth.currentUser.uid;
       notifyListeners();
+
       final prefs = await SharedPreferences.getInstance();
       final userData = json.encode(
         {
-          'token': _token,
           'userId': _userId,
-          'expiryDate': _expiryDate.toIso8601String(),
+          'email': user.email,
         },
       );
       prefs.setString('userData', userData);
+      return null;
+    } on FirebaseAuthException catch (error) {
+      var errorMessage = 'Authentication failed';
+      if (error.toString().contains('firebase_auth/wrong-password')) {
+        errorMessage = 'The password is invalid.';
+      } else if (error.toString().contains('firebase_auth/invalid-email')) {
+        errorMessage = 'The email address is badly formatted.';
+      } else if (error.toString().contains('firebase_auth/user-not-found')) {
+        errorMessage =
+            'There is no user record corresponding to this identifier. The user may have been deleted.';
+      }
+      return errorMessage;
     } catch (error) {
-      Future.delayed(loginTime).then((_) {
-        print(error);
-
-        // if (!users.containsKey(data.name)) {
-        //   return 'Username not exists';
-        // }
-        // if (users[data.name] != data.password) {
-        //   return 'Password does not match';
-        // }
-        // return null;
-      });
+      const errorMessage =
+          'Could not authenticate you. Please try again later.';
+      return errorMessage;
     }
   }
 
-  Future<void> signup(String email, String password) async {
-    return _authenticate(email, password, 'signUp'); //signUp
-  }
+  Future<String> handleSignUp(email, password) async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      final User user = result.user;
 
-  Future<void> login(String email, String password) async {
-    return _authenticate(
-        email, password, 'signInWithPassword'); //signInWithPassword
+      _userId = _auth.currentUser.uid;
+      notifyListeners();
+
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode(
+        {
+          'userId': _userId,
+          'email': user.email,
+        },
+      );
+      prefs.setString('userData', userData);
+      return null;
+    } on FirebaseAuthException catch (error) {
+      var errorMessage = 'Authentication failed';
+      if (error.toString().contains('firebase_auth/invalid-email')) {
+        errorMessage = 'The email address is badly formatted.';
+      } else if (error
+          .toString()
+          .contains('firebase_auth/email-already-in-use')) {
+        errorMessage =
+            'The email address is already in use by another account.';
+      }
+      return errorMessage;
+    } catch (error) {
+      const errorMessage =
+          'Could not authenticate you. Please try again later.';
+      return errorMessage;
+    }
   }
 
   Future<bool> tryAutoLogin() async {
@@ -104,38 +105,17 @@ class Auth with ChangeNotifier {
     }
     final extractedUserData =
         json.decode(prefs.getString('userData')) as Map<String, Object>;
-    final expiryDate = DateTime.parse(extractedUserData['expiryDate']);
-
-    if (expiryDate.isBefore(DateTime.now())) {
-      return false;
-    }
-    _token = extractedUserData['token'];
     _userId = extractedUserData['userId'];
-    _expiryDate = expiryDate;
     notifyListeners();
-    _autoLogout();
+
     return true;
   }
 
   Future<void> logout() async {
-    _token = null;
+    await FirebaseAuth.instance.signOut();
     _userId = null;
-    _expiryDate = null;
-    if (_authTimer != null) {
-      _authTimer.cancel();
-      _authTimer = null;
-    }
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
-    // prefs.remove('userData');
     prefs.clear();
-  }
-
-  void _autoLogout() {
-    if (_authTimer != null) {
-      _authTimer.cancel();
-    }
-    final timeToExpiry = _expiryDate.difference(DateTime.now()).inSeconds;
-    _authTimer = Timer(Duration(seconds: timeToExpiry), logout);
   }
 }

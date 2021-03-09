@@ -20,15 +20,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
   var _editedProduct = Album(
     id: null,
     title: '',
-    price: 0,
-    description: '',
-    imageUrl: '',
+    appbackgroundcolorname: '',
+    appbackgroundpic: '',
   );
   var _initValues = {
     'title': '',
-    'description': '',
-    'price': '',
-    'imageUrl': '',
+    'appbackgroundcolorname': '',
+    'appbackgroundpic': '',
   };
   var _isInit = true;
   var _isLoading = false;
@@ -48,12 +46,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
             Provider.of<Albums>(context, listen: false).findById(productId);
         _initValues = {
           'title': _editedProduct.title,
-          'description': _editedProduct.description,
-          'price': _editedProduct.price.toString(),
-          // 'imageUrl': _editedProduct.imageUrl,
+          'description': _editedProduct.appbackgroundcolorname,
           'imageUrl': '',
         };
-        _imageUrlController.text = _editedProduct.imageUrl;
+        _imageUrlController.text = _editedProduct.appbackgroundpic;
       }
     }
     _isInit = false;
@@ -106,7 +102,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
             title: Text('An error occurred!'),
             content: Text('Something went wrong.'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('Okay'),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -168,9 +164,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       onSaved: (value) {
                         _editedProduct = Album(
                           title: value,
-                          price: _editedProduct.price,
-                          description: _editedProduct.description,
-                          imageUrl: _editedProduct.imageUrl,
+                          appbackgroundcolorname:
+                              _editedProduct.appbackgroundcolorname,
+                          appbackgroundpic: _editedProduct.appbackgroundpic,
                           id: _editedProduct.id,
                         );
                       },
@@ -200,9 +196,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       onSaved: (value) {
                         _editedProduct = Album(
                           title: _editedProduct.title,
-                          price: double.parse(value),
-                          description: _editedProduct.description,
-                          imageUrl: _editedProduct.imageUrl,
+                          appbackgroundcolorname:
+                              _editedProduct.appbackgroundcolorname,
+                          appbackgroundpic: _editedProduct.appbackgroundpic,
                           id: _editedProduct.id,
                         );
                       },
@@ -225,9 +221,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       onSaved: (value) {
                         _editedProduct = Album(
                           title: _editedProduct.title,
-                          price: _editedProduct.price,
-                          description: value,
-                          imageUrl: _editedProduct.imageUrl,
+                          appbackgroundcolorname: value,
+                          appbackgroundpic: _editedProduct.appbackgroundpic,
                           id: _editedProduct.id,
                         );
                       },
@@ -285,9 +280,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             onSaved: (value) {
                               _editedProduct = Album(
                                 title: _editedProduct.title,
-                                price: _editedProduct.price,
-                                description: _editedProduct.description,
-                                imageUrl: value,
+                                appbackgroundcolorname:
+                                    _editedProduct.appbackgroundcolorname,
+                                appbackgroundpic: value,
                                 id: _editedProduct.id,
                               );
                             },

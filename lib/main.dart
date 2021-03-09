@@ -8,7 +8,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:unWrapp/helpers/custom_route.dart';
 import 'package:unWrapp/helpers/welcomescreen_controller.dart';
 import 'package:unWrapp/providers/albums.dart';
-import 'package:unWrapp/providers/orders.dart';
 import 'package:unWrapp/providers/auth.dart';
 import 'package:unWrapp/screens/codeEntry_screen.dart';
 import 'package:unWrapp/screens/splash_screen.dart';
@@ -57,17 +56,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProxyProvider<Auth, Albums>(
           create: null,
           update: (context, auth, previousProducts) => Albums(
-            auth.token,
             auth.userId,
             previousProducts == null ? [] : previousProducts.items,
-          ),
-        ),
-        ChangeNotifierProxyProvider<Auth, Orders>(
-          create: null,
-          update: (context, auth, previousOrders) => Orders(
-            auth.token,
-            auth.userId,
-            previousOrders == null ? [] : previousOrders.orders,
           ),
         ),
       ],
@@ -99,7 +89,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           home: auth.isAuth
-              ? NavigationTemplatesScreen()
+              ? NavigationHomeScreen()
 
               ///  Change this to the final main screen
               : FutureBuilder(
@@ -111,6 +101,7 @@ class MyApp extends StatelessWidget {
                           : WelcomeScreen(),
                 ),
           routes: {
+            WelcomeScreen.routeName: (context) => WelcomeScreen(),
             LoginFormValidation.routeName: (context) => LoginFormValidation(),
             CodeScreen.routeName: (context) => CodeScreen(),
             // LoginScreen.routeName: (context) => LoginScreen(),
