@@ -29,13 +29,13 @@ class ProductDetailScreen extends StatelessWidget {
               height: 300,
               width: double.infinity,
               child: Image.network(
-                loadedProduct.imageUrl,
+                loadedProduct.appbackgroundpic,
                 fit: BoxFit.cover,
               ),
             ),
             SizedBox(height: 10),
             Text(
-              '\$${loadedProduct.price}',
+              'tello gider',
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 20,
@@ -48,7 +48,7 @@ class ProductDetailScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
-                loadedProduct.description,
+                loadedProduct.title,
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),

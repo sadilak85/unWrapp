@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unWrapp/helpers/app_theme.dart';
 import 'package:unWrapp/models/templatelist.dart';
@@ -9,6 +10,8 @@ import 'package:unWrapp/screens/albums_overview_screen.dart';
 import 'package:unWrapp/screens/drawer_help_screen.dart';
 import 'package:unWrapp/screens/drawer_share_screen.dart';
 import 'package:unWrapp/screens/drawer_contact_screen.dart';
+import 'package:unWrapp/helpers/welcomescreen_controller.dart';
+import 'package:unWrapp/providers/auth.dart';
 
 class NavigationFontsScreen extends StatefulWidget {
   static const routeName = '/fonts-selection-screen';
@@ -70,6 +73,9 @@ class _NavigationFontsScreenState extends State<NavigationFontsScreen> {
         setState(() {
           screenView = ContactScreen();
         });
+      } else if (drawerIndex == DrawerIndex.Logout) {
+        Navigator.of(context).pushNamed(WelcomeScreen.routeName);
+        Provider.of<Auth>(context, listen: false).logout();
       } else {
         //do in your way......
       }

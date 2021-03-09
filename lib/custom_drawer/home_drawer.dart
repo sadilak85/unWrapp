@@ -48,6 +48,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Contact Us.',
         icon: Icon(Icons.info),
       ),
+      DrawerList(
+        index: DrawerIndex.Logout,
+        labelName: 'Logout',
+        icon: Icon(Icons.logout),
+      ),
     ];
   }
 
@@ -202,6 +207,7 @@ enum DrawerIndex {
   Help,
   Share,
   Contact,
+  Logout,
 }
 
 class DrawerList {

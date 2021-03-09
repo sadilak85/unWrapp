@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "5967220734",
-    "project_id": "unWrapp-58927",
-    "storage_bucket": "unWrapp-58927.appspot.com"
+    "project_number": "781483652835",
+    "project_id": "unwrapp-engneardev",
+    "storage_bucket": "unwrapp-engneardev.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:5967220734:android:8e19e66205b7fb128d3aaf",
+        "mobilesdk_app_id": "1:781483652835:android:d2e0866f3ef0dec78537d6",
         "android_client_info": {
           "package_name": "com.engnear.unWrapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "5967220734-g7tlc6bdtjpa5kaq2j4pk9aa10duqeq8.apps.googleusercontent.com",
+          "client_id": "781483652835-ogkf464ofmanqrd31vsmcpjrmgg8edos.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBOToMCYTqAQchmNB9ZGVf3duWTbmceFbQ"
+          "current_key": "AIzaSyDHmfr8W0PWu0DuQ15mesigW1y-yTdaJVQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "5967220734-g7tlc6bdtjpa5kaq2j4pk9aa10duqeq8.apps.googleusercontent.com",
+              "client_id": "781483652835-ogkf464ofmanqrd31vsmcpjrmgg8edos.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

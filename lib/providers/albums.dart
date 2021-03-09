@@ -3,19 +3,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'package:unWrapp/main.dart';
-import 'auth.dart';
+import 'package:unWrapp/providers/auth.dart';
 import 'package:unWrapp/models/http_exception.dart';
-import 'album.dart';
+import 'package:unWrapp/providers/album.dart';
 
 class Albums with ChangeNotifier {
+  final _firestore = FirebaseFirestore.instance;
   List<Album> _items = [];
-  // var _showFavoritesOnly = false;
-  final String authToken;
   final String userId;
 
-  Albums(this.authToken, this.userId, this._items);
+  Albums(this.userId, this._items);
 
   List<Album> get items {
     return [..._items];
@@ -25,39 +26,32 @@ class Albums with ChangeNotifier {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  // void showFavoritesOnly() {
-  //   _showFavoritesOnly = true;
-  //   notifyListeners();
-  // }
+  final databaseRef =
+      FirebaseDatabase.instance.reference(); //database reference object
 
-  // void showAll() {
-  //   _showFavoritesOnly = false;
-  //   notifyListeners();
-  // }
+  final databaseReference =
+      FirebaseDatabase.instance.reference().child('templates');
 
   Future<void> fetchAndSetAlbums([bool filterByUser = false]) async {
-    final filterString =
-        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
-    var url =
-        'https://test-92753-default-rtdb.firebaseio.com/products.json?auth=$authToken&$filterString';
+    final List<Album> loadedProducts = [];
     try {
-      final response = await http.get(url);
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final extractedData = _firestore.collection('templates').snapshots();
       if (extractedData == null) {
         return;
       }
-      url =
-          'https://test-92753-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
-      final List<Album> loadedProducts = [];
-      extractedData.forEach((prodId, prodData) {
-        loadedProducts.add(Album(
-          id: prodId,
-          title: prodData['title'],
-          description: prodData['description'],
-          price: prodData['price'],
-          imageUrl: prodData['imageUrl'],
-        ));
-      });
+
+      await for (var snapshot
+          in _firestore.collection('templates').snapshots()) {
+        for (var template in snapshot.docs) {
+          loadedProducts.add(Album(
+            id: template.data()['id'],
+            title: template.data()['title'],
+            appbackgroundcolorname: template.data()['appbackgroundcolorname'],
+            appbackgroundpic: template.data()['appbackgroundpic'],
+          ));
+        }
+      }
+
       _items = loadedProducts;
       notifyListeners();
     } catch (error) {
@@ -69,25 +63,19 @@ class Albums with ChangeNotifier {
   }
 
   Future<void> addProduct(Album product) async {
-    final url =
-        'https://test-92753-default-rtdb.firebaseio.com/products.json?auth=$authToken';
     try {
-      final response = await http.post(
-        url,
-        body: json.encode({
-          'title': product.title,
-          'description': product.description,
-          'imageUrl': product.imageUrl,
-          'price': product.price,
-          'creatorId': userId,
-        }),
-      );
+      _firestore.collection('templates').add({
+        'id': product.id,
+        'title': product.title,
+        'appbackgroundpic': product.appbackgroundpic,
+        'appbackgroundcolorname': product.appbackgroundcolorname,
+      });
+
       final newProduct = Album(
+        id: product.id,
         title: product.title,
-        description: product.description,
-        price: product.price,
-        imageUrl: product.imageUrl,
-        id: json.decode(response.body)['name'],
+        appbackgroundcolorname: product.appbackgroundcolorname,
+        appbackgroundpic: product.appbackgroundpic,
       );
       _items.add(newProduct);
       // _items.insert(0, newProduct); // at the start of the list
@@ -102,13 +90,12 @@ class Albums with ChangeNotifier {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url =
-          'https://test-92753-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
+          'https://unwrapp-58927-default-rtdb.firebaseio.com/products/$id.json?auth=';
       await http.patch(url,
           body: json.encode({
             'title': newProduct.title,
-            'description': newProduct.description,
-            'imageUrl': newProduct.imageUrl,
-            'price': newProduct.price
+            'appbackgroundcolorname': newProduct.appbackgroundcolorname,
+            'appbackgroundpic': newProduct.appbackgroundpic,
           }));
       _items[prodIndex] = newProduct;
       notifyListeners();
@@ -119,7 +106,7 @@ class Albums with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     final url =
-        'https://test-92753-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
+        'https://unwrapp-58927-default-rtdb.firebaseio.com/products/$id.json?auth=';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);

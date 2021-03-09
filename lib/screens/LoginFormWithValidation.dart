@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:unWrapp/screens/navigation_home_screen.dart';
 import 'package:unWrapp/helpers/app_theme.dart';
+import 'package:unWrapp/providers/auth.dart';
 
 class LoginFormValidation extends StatefulWidget {
   static const routeName = '/LoginFormValidation-screen';
@@ -14,7 +15,8 @@ class LoginFormValidation extends StatefulWidget {
 class _LoginFormValidationState extends State<LoginFormValidation> {
   GlobalKey<FormState> loginformkey = GlobalKey<FormState>();
   bool showSpinner = false;
-  final _auth = FirebaseAuth.instance;
+  //final FirebaseAuth _auth = FirebaseAuth.instance;
+  var authHandler = Auth();
 
   Map<String, String> _authData = {
     'email': '',
@@ -31,17 +33,29 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(
-          'An Error Occurred!',
+          'Oops!',
           style: TextStyle(
-            color: Colors.black,
-            fontSize: 24,
-            fontFamily: Theme.of(context).textTheme.headline3.fontFamily,
-            fontWeight: Theme.of(context).textTheme.headline3.fontWeight,
+            //decoration: TextDecoration.none,
+            fontFamily: AppTheme.subtitle.fontFamily,
+            fontSize: 18,
+            color: AppTheme.darkText,
+            fontWeight: FontWeight.w700,
           ),
         ),
-        content: Text(message),
+        content: Text(
+          message,
+          style: TextStyle(
+            //decoration: TextDecoration.none,
+            fontFamily: AppTheme.subtitle.fontFamily,
+            fontSize: 16,
+            color: AppTheme.darkText,
+            //fontWeight: FontWeight.w700,
+          ),
+          softWrap: true,
+          overflow: TextOverflow.fade,
+        ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text('Okay'),
             onPressed: () {
               Navigator.of(context).pop();
@@ -50,17 +64,6 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
         ],
       ),
     );
-  }
-
-  String validatePassword(String value) {
-    if (value.isEmpty) {
-      return "* Required";
-    } else if (value.length < 6) {
-      return "Password should be atleast 6 characters";
-    } else if (value.length > 15) {
-      return "Password should not be greater than 15 characters";
-    } else
-      return null;
   }
 
   @override
@@ -154,8 +157,6 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                                         "Password should not be greater than 15 characters")
                               ],
                             ),
-                            // validatePassword,        //Function to check validation
-
                             onChanged: (value) {
                               _authData['password'] = value;
                             },
@@ -179,22 +180,22 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                             )
                           ],
                         ),
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: () async {
                             if (loginformkey.currentState.validate()) {
                               setState(() {
                                 showSpinner = true;
                               });
-                              print(_authData);
                               try {
-                                final user =
-                                    await _auth.signInWithEmailAndPassword(
-                                        email: _authData['email'],
-                                        password: _authData['password']);
-                                if (user != null) {
-                                  Navigator.of(context).pushNamed(
-                                      NavigationHomeScreen.routeName);
-                                }
+                                await authHandler
+                                    .handleSignInEmail(_authData['email'],
+                                        _authData['password'])
+                                    .then((String errorMessage) {
+                                  errorMessage == null
+                                      ? Navigator.of(context).pushNamed(
+                                          NavigationHomeScreen.routeName)
+                                      : _showErrorDialog(errorMessage);
+                                }).catchError((e) => print(e));
 
                                 setState(() {
                                   showSpinner = false;
@@ -229,22 +230,22 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          FlatButton(
+                          TextButton(
                             onPressed: () async {
                               if (loginformkey.currentState.validate()) {
                                 setState(() {
                                   showSpinner = true;
                                 });
-                                print(_authData);
                                 try {
-                                  final newUser = await _auth
-                                      .createUserWithEmailAndPassword(
-                                          email: _authData['email'],
-                                          password: _authData['password']);
-                                  if (newUser != null) {
-                                    Navigator.of(context).pushNamed(
-                                        NavigationHomeScreen.routeName);
-                                  }
+                                  await authHandler
+                                      .handleSignUp(_authData['email'],
+                                          _authData['password'])
+                                      .then((String errorMessage) {
+                                    errorMessage == null
+                                        ? Navigator.of(context).pushNamed(
+                                            NavigationHomeScreen.routeName)
+                                        : _showErrorDialog(errorMessage);
+                                  }).catchError((e) => print(e));
 
                                   setState(() {
                                     showSpinner = false;
@@ -290,7 +291,7 @@ class _LoginFormValidationState extends State<LoginFormValidation> {
                               overflow: TextOverflow.fade,
                             ),
                           ),
-                          FlatButton(
+                          TextButton(
                             onPressed: () {
                               //TODO FORGOT PASSWORD SCREEN GOES HERE
                             },
