@@ -7,7 +7,7 @@ import 'package:unwrapp/screens/colors_selection_screen.dart';
 import 'package:unwrapp/screens/drawer_share_screen.dart';
 import 'package:unwrapp/screens/drawer_contact_screen.dart';
 import 'package:unwrapp/screens/drawer_help_screen.dart';
-import 'package:unwrapp/helpers/welcomescreen_controller.dart';
+import 'package:unwrapp/screens/welcomescreen_controller.dart';
 import 'package:unwrapp/providers/auth.dart';
 import 'package:unwrapp/models/userChoicesList.dart';
 

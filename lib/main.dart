@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-
-import 'package:unwrapp/helpers/custom_route.dart';
-import 'package:unwrapp/helpers/welcomescreen_controller.dart';
+import 'package:unwrapp/screens/welcomescreen_controller.dart';
 import 'package:unwrapp/providers/auth.dart';
 import 'package:unwrapp/providers/userchoices.dart';
+import 'package:unwrapp/providers/themedata.dart';
 import 'package:unwrapp/screens/codeEntry_screen.dart';
 import 'package:unwrapp/screens/splash_screen.dart';
 import 'package:unwrapp/screens/albums_overview_screen.dart';
@@ -34,7 +33,14 @@ void main() async {
   await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
-  ]).then((_) => runApp(MyApp()));
+  ]).then(
+    (_) => runApp(
+      ChangeNotifierProvider<ThemeModel>(
+        create: (context) => ThemeModel(),
+        child: MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -67,28 +73,8 @@ class MyApp extends StatelessWidget {
           title: 'unwrapp',
           debugShowCheckedModeBanner: false,
           navigatorKey: key,
-          theme: ThemeData(
-            //platform: TargetPlatform.android,
-            // ef4f4f
-            // ee9595
-            // ffcda3
-            // 74c7b8
-            primarySwatch: Colors.red,
-            backgroundColor: Colors.white,
-            primaryColor: Color.fromRGBO(244, 67, 54, 1),
-            primaryColorLight: Color.fromRGBO(255, 205, 210, 1),
-            primaryColorDark: Color.fromRGBO(211, 47, 47, 1),
-            accentColor: Color.fromRGBO(3, 169, 244, 1),
-            bottomAppBarColor: Color.fromRGBO(189, 189, 189, 1),
-            canvasColor: Colors.white,
-            //canvasColor: Color.fromRGBO(255, 254, 229, 1),
-            pageTransitionsTheme: PageTransitionsTheme(
-              builders: {
-                TargetPlatform.android: CustomPageTransitionBuilder(),
-                TargetPlatform.iOS: CustomPageTransitionBuilder(),
-              },
-            ),
-          ),
+          //platform: TargetPlatform.android,
+          theme: Provider.of<ThemeModel>(context).currentTheme,
           home: auth.isAuth
               ? NavigationHomeScreen()
 

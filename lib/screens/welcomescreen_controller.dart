@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../screens/LoginFormWithValidation.dart';
-import '../screens/codeEntry_screen.dart';
+import 'package:unwrapp/screens/LoginFormWithValidation.dart';
+import 'package:unwrapp/screens/codeEntry_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const routeName = '/welcome-screen';

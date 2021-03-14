@@ -7,7 +7,7 @@ import 'package:unwrapp/screens/home_screen.dart';
 import 'package:unwrapp/screens/drawer_help_screen.dart';
 import 'package:unwrapp/screens/drawer_share_screen.dart';
 import 'package:unwrapp/screens/drawer_contact_screen.dart';
-import 'package:unwrapp/helpers/welcomescreen_controller.dart';
+import 'package:unwrapp/screens/welcomescreen_controller.dart';
 import 'package:unwrapp/providers/auth.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
