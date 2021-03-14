@@ -12,6 +12,7 @@ import 'package:unwrapp/screens/welcomescreen_controller.dart';
 import 'package:unwrapp/providers/auth.dart';
 import 'package:unwrapp/models/fontslist.dart';
 import 'package:unwrapp/models/userChoicesList.dart';
+import 'package:unwrapp/helpers/showdialogbox.dart';
 
 class NavigationFontsScreen extends StatefulWidget {
   static const routeName = '/fonts-selection-screen';
@@ -115,63 +116,9 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
     super.dispose();
   }
 
-  void showDialog() {
-    showGeneralDialog(
-      barrierLabel: "Barrier",
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.5),
-      transitionDuration: Duration(milliseconds: 200),
-      context: context,
-      pageBuilder: (_, __, ___) {
-        return Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 300,
-            child: SizedBox.expand(
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Icon(
-                        Icons.help_outline,
-                        color: AppTheme.dark_grey,
-                      ),
-                    ),
-                    Text(
-                      '''\n\nSelect a layout of your gift app before starting to create it. 
-                      \n\nTap to open detailed view then click check icon to confirm.''',
-                      style: TextStyle(
-                        decoration: TextDecoration.none,
-                        fontFamily: AppTheme.subtitle.fontFamily,
-                        fontSize: 18,
-                        color: AppTheme.darkText,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            margin: EdgeInsets.only(bottom: 50, left: 12, right: 12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(40),
-            ),
-          ),
-        );
-      },
-      transitionBuilder: (_, anim, __, child) {
-        return SlideTransition(
-          position: Tween(begin: Offset(1, 0), end: Offset(0, 0)).animate(anim),
-          child: child,
-        );
-      },
-    );
-  }
+  String _textboxmessage =
+      '''\n\nSelect a layout of your gift app before starting to create it. 
+                      \n\nTap to open detailed view then click check icon to confirm.''';
 
   @override
   Widget build(BuildContext context) {
@@ -306,7 +253,7 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                     Icons.help_outline,
                     color: AppTheme.dark_grey,
                   ),
-                  onTap: showDialog,
+                  onTap: () => showDialogmenu(context, _textboxmessage),
                 ),
               ),
             ),

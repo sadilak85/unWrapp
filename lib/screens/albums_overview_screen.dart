@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:unwrapp/widgets/app_drawer.dart';
 import 'package:unwrapp/models/userChoicesList.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:unwrapp/providers/themedata.dart';
-import 'package:provider/provider.dart';
+import 'package:unwrapp/helpers/showdialogbox.dart';
 
 class AlbumsOverviewScreen extends StatefulWidget {
   static const routeName = '/products-overview';
@@ -13,11 +14,30 @@ class AlbumsOverviewScreen extends StatefulWidget {
   _AlbumsOverviewScreenState createState() => _AlbumsOverviewScreenState();
 }
 
-class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
-  var _isLoading = false;
+class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen>
+    with TickerProviderStateMixin {
+  AnimationController animationController;
+  // bool multiple = true;
+
+  @override
+  void initState() {
+    animationController = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
   bool creator = true;
-  Color currentColor = Colors.yellow;
-  String _selectedTabTitle = 'val';
+  Color currentColor = Colors.red;
+  String _selectedTabTitle;
+  bool _initial = true;
+  String _textboxmessage = '''\n\nChoose a celebration concept for your app. 
+                      \n\nAI will make it easy for you to start creation regarding your selection''';
 
   @override
   Widget build(BuildContext context) {
@@ -40,98 +60,110 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
     print(userchoiceargs.usercolorpalette.appbackgroundcolorpalette);
     print(userchoiceargs.userselectedfont);
 
-    // String _selectedTabTitle = userchoiceargs.appBartitle.toString();
+    if (_initial) {
+      _selectedTabTitle = userchoiceargs.appBartitle.toString();
+      _initial = !_initial;
+    }
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Provider.of<ThemeModel>(context).primarycolor,
+        backgroundColor:
+            Provider.of<ThemeModel>(context, listen: false).primarycolor,
 
-        title: GestureDetector(
-          onTap: () => {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text('TextField in Dialog'),
-                  content: TextField(
-                    onChanged: (value) {
-                      setState(() => _selectedTabTitle = value);
+        title: creator
+            ? GestureDetector(
+                onTap: () => {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Enter your main title'),
+                        content: TextField(
+                          onChanged: (value) {
+                            setState(() => _selectedTabTitle = value);
+                          },
+                          decoration:
+                              InputDecoration(hintText: "Type your title"),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            style: TextButton.styleFrom(
+                              primary: Colors.white,
+                              backgroundColor: Provider.of<ThemeModel>(context,
+                                      listen: false)
+                                  .primarycolor,
+                            ),
+                            child: Text('OK'),
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pop(context);
+                              });
+                            },
+                          ),
+                        ],
+                      );
                     },
-                    decoration:
-                        InputDecoration(hintText: "Text Field in Dialog"),
                   ),
-                  actions: <Widget>[
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Colors.white,
-                        backgroundColor:
-                            Provider.of<ThemeModel>(context).primarycolor,
-                      ),
-                      child: Text('OK'),
-                      onPressed: () {
-                        setState(() {
-                          Navigator.pop(context);
-                        });
-                      },
-                    ),
-                  ],
-                );
-              },
-            ),
-          },
+                },
 
-          //setState(() => _selectedTabTitle = "teketek")},
-          child: Container(
-            child: Text(_selectedTabTitle),
-          ),
-        ),
+                //setState(() => _selectedTabTitle = "teketek")},
+                child: Container(
+                  child: Text(_selectedTabTitle),
+                ),
+              )
+            : Text(userchoiceargs.appBartitle.toString()),
 
         //title: Text(_selectedTabTitle),
-        actions: <Widget>[
-          // TextField(
-          //           textAlign: TextAlign.center,
-          //           decoration: InputDecoration(
-          //             border: OutlineInputBorder(
-          //               borderRadius: const BorderRadius.all(
-          //                 Radius.circular(5),
-          //               ),
-          //             ),
-          //             hintText: 'Change title',
-          //           ),
-          //           onChanged: (value) {
-          //             setState(() => _selectedTabTitle = value);
-          //           },
-          //         ),
+        actions: creator
+            ? <Widget>[
+                // TextField(
+                //           textAlign: TextAlign.center,
+                //           decoration: InputDecoration(
+                //             border: OutlineInputBorder(
+                //               borderRadius: const BorderRadius.all(
+                //                 Radius.circular(5),
+                //               ),
+                //             ),
+                //             hintText: 'Change title',
+                //           ),
+                //           onChanged: (value) {
+                //             setState(() => _selectedTabTitle = value);
+                //           },
+                //         ),
 
-          IconButton(
-            icon: Icon(
-              Icons.palette,
-              color: creator
-                  ? Provider.of<ThemeModel>(context).accentcolor
-                  : Provider.of<ThemeModel>(context).primarycolor,
-            ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Select a color'),
-                    content: SingleChildScrollView(
-                      child: BlockPicker(
-                        pickerColor: currentColor,
-                        onColorChanged: (Color value) {
-                          Provider.of<ThemeModel>(context, listen: false)
-                              .primarycolor = value;
+                IconButton(
+                  icon: Icon(
+                    Icons.palette,
+                    color: creator
+                        ? Provider.of<ThemeModel>(context, listen: false)
+                            .accentcolor
+                        : Provider.of<ThemeModel>(context, listen: false)
+                            .primarycolor,
+                  ),
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Select a color'),
+                          content: SingleChildScrollView(
+                            child: BlockPicker(
+                              pickerColor: currentColor,
+                              onColorChanged: (Color value) {
+                                Provider.of<ThemeModel>(context, listen: false)
+                                    .primarycolor = value;
 
-                          setState(() => currentColor = value);
-                        },
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
-        ],
+                                setState(() => currentColor = value);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ]
+            : null,
       ),
       drawer: AppDrawer(),
       body: StreamBuilder<QuerySnapshot>(
@@ -160,9 +192,8 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
               ? Center(child: CircularProgressIndicator())
               : ListView.builder(
                   itemCount: 1,
-                  itemBuilder: (context, index) => Center(
-                    child: Text('baka'),
-                  ),
+                  itemBuilder: (context, index) =>
+                      Center(child: Text('Press the button below!')),
 
                   //   UserChoicesList(
                   //   appBartitle:templateDocs[index].data()['appBartitle'],
@@ -178,6 +209,16 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
                 );
         },
       ),
+      floatingActionButton: creator
+          ? FloatingActionButton(
+              onPressed: () => showDialogmenu(context, _textboxmessage),
+              child: Icon(Icons.add,
+                  color: Provider.of<ThemeModel>(context, listen: false)
+                      .accentcolor),
+              backgroundColor:
+                  Provider.of<ThemeModel>(context, listen: false).primarycolor,
+            )
+          : null,
     );
   }
 }
