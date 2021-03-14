@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:unWrapp/templates_app/fitness_app_style/fintness_app_theme.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/fintness_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 

@@ -1,83 +1,77 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:unwrapp/providers/album.dart';
 
-import 'package:unWrapp/main.dart';
-import 'package:unWrapp/providers/auth.dart';
-import 'package:unWrapp/models/http_exception.dart';
-import 'package:unWrapp/providers/album.dart';
+class OrderItem {
+  final String id;
+  final double amount;
+
+  final DateTime dateTime;
+
+  OrderItem({
+    @required this.id,
+    @required this.amount,
+    @required this.dateTime,
+  });
+}
 
 class Albums with ChangeNotifier {
-  final _firestore = FirebaseFirestore.instance;
-  List<Album> _items = [];
+  List<OrderItem> _orders = [];
+  final String authToken;
   final String userId;
 
-  Albums(this.userId, this._items);
+  Albums(this.authToken, this.userId, this._orders);
 
-  List<Album> get items {
-    return [..._items];
+  List<OrderItem> get albums {
+    return [..._orders];
   }
 
-  Album findById(String id) {
-    return _items.firstWhere((prod) => prod.id == id);
-  }
-
-  final databaseRef =
-      FirebaseDatabase.instance.reference(); //database reference object
-
-  final databaseReference =
-      FirebaseDatabase.instance.reference().child('templates');
-
-  Future<void> fetchAndSetAlbums([bool filterByUser = false]) async {
-    final List<Album> loadedProducts = [];
-    try {
-      final extractedData = _firestore.collection('templates').snapshots();
-      if (extractedData == null) {
-        return;
-      }
-
-      await for (var snapshot
-          in _firestore.collection('templates').snapshots()) {
-        for (var template in snapshot.docs) {
-          loadedProducts.add(Album(
-            id: template.data()['id'],
-            title: template.data()['title'],
-            appbackgroundcolorname: template.data()['appbackgroundcolorname'],
-            appbackgroundpic: template.data()['appbackgroundpic'],
-          ));
-        }
-      }
-
-      _items = loadedProducts;
-      notifyListeners();
-    } catch (error) {
-      navigatorKey.currentState.pop();
-      navigatorKey.currentState.pushReplacementNamed('/');
-
-      Provider.of<Auth>(navigatorKey.currentContext, listen: false).logout();
+  Future<void> fetchAndSetOrders() async {
+    final url =
+        'https://unwrapp-58927-default-rtdb.firebaseio.com/albums/$userId.json?auth=$authToken';
+    final response = await http.get(url);
+    final List<OrderItem> loadedOrders = [];
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData == null) {
+      return;
     }
+    extractedData.forEach((orderId, orderData) {
+      loadedOrders.add(
+        OrderItem(
+          id: orderId,
+          amount: orderData['amount'],
+          dateTime: DateTime.parse(orderData['dateTime']),
+        ),
+      );
+    });
+    _orders = loadedOrders.reversed.toList();
+    notifyListeners();
   }
 
   Future<void> addProduct(Album product) async {
+    final url =
+        'https://dayanio-98e6f-default-rtdb.firebaseio.com/products.json?auth=$authToken';
     try {
-      _firestore.collection('templates').add({
-        'id': product.id,
-        'title': product.title,
-        'appbackgroundpic': product.appbackgroundpic,
-        'appbackgroundcolorname': product.appbackgroundcolorname,
-      });
-
-      final newProduct = Album(
-        id: product.id,
-        title: product.title,
-        appbackgroundcolorname: product.appbackgroundcolorname,
-        appbackgroundpic: product.appbackgroundpic,
+      final response = await http.post(
+        url,
+        body: json.encode({
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'creatorId': userId,
+        }),
       );
-      _items.add(newProduct);
+      final newProduct = Album(
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        id: json.decode(response.body)['name'],
+      );
+      _orders.add(null);
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
     } catch (error) {
@@ -87,17 +81,18 @@ class Albums with ChangeNotifier {
   }
 
   Future<void> updateProduct(String id, Album newProduct) async {
-    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    final prodIndex = _orders.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
       final url =
-          'https://unwrapp-58927-default-rtdb.firebaseio.com/products/$id.json?auth=';
+          'https://dayanio-98e6f-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
       await http.patch(url,
           body: json.encode({
             'title': newProduct.title,
-            'appbackgroundcolorname': newProduct.appbackgroundcolorname,
-            'appbackgroundpic': newProduct.appbackgroundpic,
+            'description': newProduct.description,
+            'imageUrl': newProduct.imageUrl,
+            'price': newProduct.price
           }));
-      _items[prodIndex] = newProduct;
+      _orders[prodIndex] = null;
       notifyListeners();
     } else {
       print('...');
@@ -106,16 +101,15 @@ class Albums with ChangeNotifier {
 
   Future<void> deleteProduct(String id) async {
     final url =
-        'https://unwrapp-58927-default-rtdb.firebaseio.com/products/$id.json?auth=';
-    final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
-    var existingProduct = _items[existingProductIndex];
-    _items.removeAt(existingProductIndex);
+        'https://dayanio-98e6f-default-rtdb.firebaseio.com/products/$id.json?auth=$authToken';
+    final existingProductIndex = _orders.indexWhere((prod) => prod.id == id);
+    var existingProduct = _orders[existingProductIndex];
+    _orders.removeAt(existingProductIndex);
     notifyListeners();
     final response = await http.delete(url);
     if (response.statusCode >= 400) {
-      _items.insert(existingProductIndex, existingProduct);
+      _orders.insert(existingProductIndex, existingProduct);
       notifyListeners();
-      throw HttpException('Could not delete product.');
     }
     existingProduct = null;
   }

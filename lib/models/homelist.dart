@@ -1,6 +1,6 @@
-import 'package:unWrapp/templates_app/course_app_style/home_design_course.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/fitness_app_home_screen.dart';
-import 'package:unWrapp/templates_app/booking_app_style/hotel_home_screen.dart';
+import 'package:unwrapp/templates_app/course_app_style/home_design_course.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/fitness_app_home_screen.dart';
+import 'package:unwrapp/templates_app/booking_app_style/hotel_home_screen.dart';
 import 'package:flutter/widgets.dart';
 
 class HomeList {

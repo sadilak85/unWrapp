@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/models/tabIcon_data.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/traning/training_screen.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/bottom_navigation_view/bottom_bar_view.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/fintness_app_theme.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/my_diary/my_diary_screen.dart';
-import 'package:unWrapp/screens/templates_selection_screen.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/models/tabIcon_data.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/traning/training_screen.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/bottom_navigation_view/bottom_bar_view.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/fintness_app_theme.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/my_diary/my_diary_screen.dart';
+import 'package:unwrapp/screens/celebration_selection_screen.dart';
+import 'package:unwrapp/models/userChoicesList.dart';
 
 class FitnessAppHomeScreen extends StatefulWidget {
   @override
@@ -78,8 +79,10 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
             ),
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(NavigationTemplatesScreen.routeName);
+              Navigator.of(context).pushNamed(
+                CelebrationSelectionScreen.routeName,
+                arguments: AppLayout.Fitnesstype,
+              );
             },
           ),
         ),

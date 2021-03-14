@@ -1,9 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:unWrapp/templates_app/booking_app_style/hotel_list_view.dart';
-import 'package:unWrapp/templates_app/booking_app_style/model/hotel_list_data.dart';
-import 'package:unWrapp/templates_app/booking_app_style/hotel_app_theme.dart';
-import 'package:unWrapp/screens/templates_selection_screen.dart';
+import 'package:unwrapp/templates_app/booking_app_style/hotel_list_view.dart';
+import 'package:unwrapp/templates_app/booking_app_style/model/hotel_list_data.dart';
+import 'package:unwrapp/templates_app/booking_app_style/hotel_app_theme.dart';
+import 'package:unwrapp/screens/celebration_selection_screen.dart';
+import 'package:unwrapp/models/userChoicesList.dart';
 
 class HotelHomeScreen extends StatefulWidget {
   @override
@@ -103,8 +104,10 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
             ),
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () {
-              Navigator.of(context)
-                  .pushNamed(NavigationTemplatesScreen.routeName);
+              Navigator.of(context).pushNamed(
+                CelebrationSelectionScreen.routeName,
+                arguments: AppLayout.Traveltype,
+              );
             },
           ),
         ),

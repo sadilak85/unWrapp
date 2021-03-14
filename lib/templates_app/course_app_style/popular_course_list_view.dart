@@ -1,6 +1,6 @@
-import 'package:unWrapp/templates_app/course_app_style/design_course_app_theme.dart';
-import 'package:unWrapp/templates_app/course_app_style/models/category.dart';
-import 'package:unWrapp/main.dart';
+import 'package:unwrapp/templates_app/course_app_style/design_course_app_theme.dart';
+import 'package:unwrapp/templates_app/course_app_style/models/category.dart';
+import 'package:unwrapp/main.dart';
 import 'package:flutter/material.dart';
 
 class PopularCourseListView extends StatefulWidget {

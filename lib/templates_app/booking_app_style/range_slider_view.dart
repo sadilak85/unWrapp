@@ -1,4 +1,4 @@
-import 'package:unWrapp/templates_app/booking_app_style/hotel_app_theme.dart';
+import 'package:unwrapp/templates_app/booking_app_style/hotel_app_theme.dart';
 import 'package:flutter/material.dart';
 
 class RangeSliderView extends StatefulWidget {

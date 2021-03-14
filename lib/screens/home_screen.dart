@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:unWrapp/helpers/app_theme.dart';
-import 'package:unWrapp/models/homelist.dart';
+import 'package:unwrapp/helpers/app_theme.dart';
+import 'package:unwrapp/models/homelist.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key key}) : super(key: key);

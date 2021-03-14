@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:unWrapp/providers/albums.dart';
+import 'package:unwrapp/models/userChoicesList.dart';
+import 'package:unwrapp/providers/albums.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   // final String title;
@@ -12,15 +13,21 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productId =
-        ModalRoute.of(context).settings.arguments as String; // is the id!
+    var _choicesList = UserChoicesList(
+      appBartitle: '',
+      appbackgroundpic: '',
+      appbackgroundcolorname: '',
+      apptypeindex: null,
+      celebrationtype: null,
+    );
+
     final loadedProduct = Provider.of<Albums>(
       context,
       listen: false,
-    ).findById(productId);
+    ).fetchAndSetOrders();
     return Scaffold(
       appBar: AppBar(
-        title: Text(loadedProduct.title),
+        title: Text('komiya'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -29,7 +36,7 @@ class ProductDetailScreen extends StatelessWidget {
               height: 300,
               width: double.infinity,
               child: Image.network(
-                loadedProduct.appbackgroundpic,
+                _choicesList.appbackgroundpic,
                 fit: BoxFit.cover,
               ),
             ),
@@ -48,7 +55,7 @@ class ProductDetailScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
-                loadedProduct.title,
+                _choicesList.appBartitle,
                 textAlign: TextAlign.center,
                 softWrap: true,
               ),

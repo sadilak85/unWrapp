@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:unWrapp/templates_app/course_app_style/course_info_screen.dart';
-import 'package:unWrapp/templates_app/course_app_style/popular_course_list_view.dart';
-import 'package:unWrapp/templates_app/course_app_style/design_course_app_theme.dart';
-import 'package:unWrapp/screens/templates_selection_screen.dart';
+import 'package:unwrapp/templates_app/course_app_style/course_info_screen.dart';
+import 'package:unwrapp/templates_app/course_app_style/popular_course_list_view.dart';
+import 'package:unwrapp/templates_app/course_app_style/design_course_app_theme.dart';
+import 'package:unwrapp/screens/celebration_selection_screen.dart';
+import 'package:unwrapp/models/userChoicesList.dart';
 
 class DesignCourseHomeScreen extends StatefulWidget {
   @override
@@ -55,8 +56,10 @@ class _DesignCourseHomeScreenState extends State<DesignCourseHomeScreen> {
           ),
           backgroundColor: Theme.of(context).primaryColor,
           onPressed: () {
-            Navigator.of(context)
-                .pushNamed(NavigationTemplatesScreen.routeName);
+            Navigator.of(context).pushNamed(
+              CelebrationSelectionScreen.routeName,
+              arguments: AppLayout.Coursetype,
+            );
           },
         ),
       ),

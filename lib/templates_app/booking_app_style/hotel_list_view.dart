@@ -1,7 +1,7 @@
-import 'package:unWrapp/templates_app/booking_app_style/hotel_app_theme.dart';
+import 'package:unwrapp/templates_app/booking_app_style/hotel_app_theme.dart';
 import 'package:flutter/material.dart';
 
-import 'package:unWrapp/templates_app/booking_app_style/model/hotel_list_data.dart';
+import 'package:unwrapp/templates_app/booking_app_style/model/hotel_list_data.dart';
 
 class HotelListView extends StatelessWidget {
   const HotelListView(

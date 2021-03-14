@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:unWrapp/helpers/app_theme.dart';
-import 'package:unWrapp/models/templatelist.dart';
-import 'package:unWrapp/models/fontslist.dart';
-import 'package:unWrapp/custom_drawer/drawer_user_controller.dart';
-import 'package:unWrapp/custom_drawer/home_drawer.dart';
-import 'package:unWrapp/screens/albums_overview_screen.dart';
-import 'package:unWrapp/screens/drawer_help_screen.dart';
-import 'package:unWrapp/screens/drawer_share_screen.dart';
-import 'package:unWrapp/screens/drawer_contact_screen.dart';
-import 'package:unWrapp/helpers/welcomescreen_controller.dart';
-import 'package:unWrapp/providers/auth.dart';
+import 'package:unwrapp/helpers/app_theme.dart';
+import 'package:unwrapp/custom_drawer/drawer_user_controller.dart';
+import 'package:unwrapp/custom_drawer/home_drawer.dart';
+import 'package:unwrapp/screens/albums_overview_screen.dart';
+import 'package:unwrapp/screens/drawer_help_screen.dart';
+import 'package:unwrapp/screens/drawer_share_screen.dart';
+import 'package:unwrapp/screens/drawer_contact_screen.dart';
+import 'package:unwrapp/helpers/welcomescreen_controller.dart';
+import 'package:unwrapp/providers/auth.dart';
+import 'package:unwrapp/models/fontslist.dart';
+import 'package:unwrapp/models/userChoicesList.dart';
 
 class NavigationFontsScreen extends StatefulWidget {
   static const routeName = '/fonts-selection-screen';
@@ -94,13 +94,6 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
     with TickerProviderStateMixin {
   List<String> userFontsList = UserSelectionFonts.userFontsList;
 
-  Map<String, String> userchoices = {
-    'title': '',
-    'appbackgroundpic': '',
-    'appbackgroundcolorname': '',
-    'userFontsList': '',
-  };
-
   AnimationController animationController;
   // bool multiple = true;
 
@@ -182,6 +175,8 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
 
   @override
   Widget build(BuildContext context) {
+    final UserChoicesList userchoiceargs =
+        ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: AppTheme.white,
       body: FutureBuilder<bool>(
@@ -214,6 +209,7 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                               userFontsList.length,
                               (int index) {
                                 final int count = userFontsList.length;
+
                                 final Animation<double> animation =
                                     Tween<double>(begin: 0.0, end: 1.0).animate(
                                   CurvedAnimation(
@@ -227,10 +223,12 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                                   animation: animation,
                                   animationController: animationController,
                                   fontslistData: userFontsList[index],
-                                  callBack: () {
+                                  callBack: (_userfont) {
+                                    userchoiceargs.userselectedfont = _userfont;
+
                                     Navigator.of(context).pushNamed(
                                       AlbumsOverviewScreen.routeName,
-                                      arguments: ScreenArguments(userchoices),
+                                      arguments: userchoiceargs,
                                     );
 
                                     // Navigator.push<dynamic>(
@@ -329,7 +327,7 @@ class FontsListView extends StatelessWidget {
       : super(key: key);
 
   final String fontslistData;
-  final VoidCallback callBack;
+  final void Function(String) callBack;
   final AnimationController animationController;
   final Animation<dynamic> animation;
 
@@ -359,7 +357,7 @@ class FontsListView extends StatelessWidget {
                           borderRadius:
                               const BorderRadius.all(Radius.circular(4.0)),
                           onTap: () {
-                            callBack();
+                            callBack(fontslistData);
                           },
                         ),
                       ),

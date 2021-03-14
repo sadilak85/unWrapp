@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class UserColorPalette {
-  List<Color> appbackgroundcolorpalette;
+  final List<Color> appbackgroundcolorpalette;
 
   UserColorPalette({
-    this.appbackgroundcolorpalette,
+    @required this.appbackgroundcolorpalette,
   });
 
   static List<UserColorPalette> colorPaletteList = [

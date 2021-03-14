@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:unWrapp/helpers/rounded_button.dart';
-import 'package:unWrapp/helpers/constants.dart';
+import 'package:unwrapp/helpers/rounded_button.dart';
+import 'package:unwrapp/helpers/constants.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:unWrapp/screens/templates_selection_screen.dart';
+import 'package:unwrapp/screens/celebration_selection_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         email: email, password: password);
                     if (user != null) {
                       Navigator.of(context)
-                          .pushNamed(NavigationTemplatesScreen.routeName);
+                          .pushNamed(CelebrationSelectionScreen.routeName);
                     }
 
                     setState(() {

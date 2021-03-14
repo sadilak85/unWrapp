@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:unWrapp/screens/navigation_home_screen.dart';
-import 'package:unWrapp/helpers/app_theme.dart';
+import 'package:unwrapp/screens/navigation_home_screen.dart';
+import 'package:unwrapp/helpers/app_theme.dart';
 
 class CodeScreen extends StatefulWidget {
   static const routeName = '/code-screen';
@@ -54,7 +54,8 @@ class _CodeScreenState extends State<CodeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/logo.png'), fit: BoxFit.contain),
+              image: AssetImage('assets/images/login.png'),
+              fit: BoxFit.contain),
         ),
         child: ModalProgressHUD(
           inAsyncCall: showSpinner,

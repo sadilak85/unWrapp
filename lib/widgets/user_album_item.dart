@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:unWrapp/screens/edit_album_screen.dart';
-import 'package:unWrapp/providers/albums.dart';
+import 'package:unwrapp/screens/edit_album_screen.dart';
+import 'package:unwrapp/helpers/database_operations.dart';
 
 class UserProductItem extends StatelessWidget {
   final String id;
@@ -34,8 +32,7 @@ class UserProductItem extends StatelessWidget {
               icon: Icon(Icons.delete),
               onPressed: () async {
                 try {
-                  await Provider.of<Albums>(context, listen: false)
-                      .deleteProduct(id);
+                  await deleteData('albums');
                 } catch (error) {
                   return;
                 }

@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:unWrapp/helpers/app_theme.dart';
-import 'package:unWrapp/models/templatelist.dart';
-import 'package:unWrapp/custom_drawer/drawer_user_controller.dart';
-import 'package:unWrapp/custom_drawer/home_drawer.dart';
-import 'package:unWrapp/screens/colors_selection_screen.dart';
-import 'package:unWrapp/screens/drawer_share_screen.dart';
-import 'package:unWrapp/screens/drawer_contact_screen.dart';
-import 'package:unWrapp/screens/drawer_help_screen.dart';
-import 'package:unWrapp/helpers/welcomescreen_controller.dart';
-import 'package:unWrapp/providers/auth.dart';
+import 'package:unwrapp/helpers/app_theme.dart';
+import 'package:unwrapp/custom_drawer/drawer_user_controller.dart';
+import 'package:unwrapp/custom_drawer/home_drawer.dart';
+import 'package:unwrapp/screens/colors_selection_screen.dart';
+import 'package:unwrapp/screens/drawer_share_screen.dart';
+import 'package:unwrapp/screens/drawer_contact_screen.dart';
+import 'package:unwrapp/screens/drawer_help_screen.dart';
+import 'package:unwrapp/helpers/welcomescreen_controller.dart';
+import 'package:unwrapp/providers/auth.dart';
+import 'package:unwrapp/models/userChoicesList.dart';
 
-class NavigationTemplatesScreen extends StatefulWidget {
+class CelebrationSelectionScreen extends StatefulWidget {
   static const routeName = '/templates-selection-screen';
   @override
-  _NavigationTemplatesScreenState createState() =>
-      _NavigationTemplatesScreenState();
+  _CelebrationSelectionScreenState createState() =>
+      _CelebrationSelectionScreenState();
 }
 
-class _NavigationTemplatesScreenState extends State<NavigationTemplatesScreen> {
+class _CelebrationSelectionScreenState
+    extends State<CelebrationSelectionScreen> {
   Widget screenView;
   DrawerIndex drawerIndex;
 
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
-    screenView = const TemplatesOverviewScreen();
+    screenView = const CelebrationOverviewScreen();
     super.initState();
   }
 
@@ -58,7 +59,7 @@ class _NavigationTemplatesScreenState extends State<NavigationTemplatesScreen> {
       drawerIndex = drawerIndexdata;
       if (drawerIndex == DrawerIndex.HOME) {
         setState(() {
-          screenView = const TemplatesOverviewScreen();
+          screenView = const CelebrationOverviewScreen();
         });
       } else if (drawerIndex == DrawerIndex.Help) {
         setState(() {
@@ -82,17 +83,17 @@ class _NavigationTemplatesScreenState extends State<NavigationTemplatesScreen> {
   }
 }
 
-class TemplatesOverviewScreen extends StatefulWidget {
-  const TemplatesOverviewScreen({Key key}) : super(key: key);
+class CelebrationOverviewScreen extends StatefulWidget {
+  const CelebrationOverviewScreen({Key key}) : super(key: key);
 
   @override
-  _TemplatesOverviewScreenState createState() =>
-      _TemplatesOverviewScreenState();
+  _CelebrationOverviewScreenState createState() =>
+      _CelebrationOverviewScreenState();
 }
 
-class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
+class _CelebrationOverviewScreenState extends State<CelebrationOverviewScreen>
     with TickerProviderStateMixin {
-  List<AppUserChoiceList> templateList = AppUserChoiceList.templateList;
+  List<UserChoicesList> templateList = UserChoicesList.templateList;
 
   AnimationController animationController;
   // bool multiple = true;
@@ -225,6 +226,28 @@ class _TemplatesOverviewScreenState extends State<TemplatesOverviewScreen>
                                   callBack: () {
                                     Navigator.of(context).pushNamed(
                                       NavigationColorsScreen.routeName,
+                                      arguments: UserChoicesList(
+                                        appBartitle:
+                                            templateList[index].appBartitle,
+                                        appbackgroundpic: templateList[index]
+                                            .appbackgroundpic,
+                                        appbackgroundcolorname:
+                                            templateList[index]
+                                                .appbackgroundcolorname,
+                                        apptypeindex: ModalRoute.of(context)
+                                            .settings
+                                            .arguments,
+                                        tempbuttonimage:
+                                            templateList[index].tempbuttonimage,
+                                        celebrationtitle: templateList[index]
+                                            .celebrationtitle,
+                                        celebrationtype:
+                                            templateList[index].celebrationtype,
+                                        usercolorpalette: templateList[index]
+                                            .usercolorpalette,
+                                        userselectedfont: templateList[index]
+                                            .userselectedfont,
+                                      ),
                                     );
 
                                     // Navigator.push<dynamic>(
@@ -323,7 +346,7 @@ class TemplateListView extends StatelessWidget {
       this.animationvaluechanger})
       : super(key: key);
 
-  final AppUserChoiceList listData;
+  final UserChoicesList listData;
   final VoidCallback callBack;
   final AnimationController animationController;
   final Animation<dynamic> animation;
@@ -359,7 +382,7 @@ class TemplateListView extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              listData.title,
+                              listData.celebrationtitle,
                               style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -393,10 +416,10 @@ class TemplateListView extends StatelessWidget {
 }
 
 // import 'package:flutter/material.dart';
-// import 'package:unWrapp/widgets/template_item.dart';
-// import 'package:unWrapp/models/template.dart';
+// import 'package:unwrapp/widgets/template_item.dart';
+// import 'package:unwrapp/models/template.dart';
 
-// class TemplatesOverviewScreen extends StatelessWidget {
+// class CelebrationOverviewScreen extends StatelessWidget {
 //   static const routeName = '/templates-overview';
 //   @override
 //   Widget build(BuildContext context) {

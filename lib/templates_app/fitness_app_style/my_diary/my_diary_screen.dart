@@ -1,6 +1,6 @@
-import 'package:unWrapp/templates_app/fitness_app_style/ui_view/body_measurement.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/ui_view/title_view.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/fintness_app_theme.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/ui_view/body_measurement.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/ui_view/title_view.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/fintness_app_theme.dart';
 import 'package:flutter/material.dart';
 
 class MyDiaryScreen extends StatefulWidget {

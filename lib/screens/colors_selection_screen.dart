@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:unWrapp/helpers/app_theme.dart';
-import 'package:unWrapp/models/colorpalette.dart';
-import 'package:unWrapp/custom_drawer/drawer_user_controller.dart';
-import 'package:unWrapp/custom_drawer/home_drawer.dart';
-import 'package:unWrapp/screens/fonts_selection_screen.dart';
-import 'package:unWrapp/screens/drawer_share_screen.dart';
-import 'package:unWrapp/screens/drawer_contact_screen.dart';
-import 'package:unWrapp/screens/drawer_help_screen.dart';
-import 'package:unWrapp/helpers/welcomescreen_controller.dart';
-import 'package:unWrapp/providers/auth.dart';
+import 'package:unwrapp/helpers/app_theme.dart';
+import 'package:unwrapp/custom_drawer/drawer_user_controller.dart';
+import 'package:unwrapp/custom_drawer/home_drawer.dart';
+import 'package:unwrapp/screens/fonts_selection_screen.dart';
+import 'package:unwrapp/screens/drawer_share_screen.dart';
+import 'package:unwrapp/screens/drawer_contact_screen.dart';
+import 'package:unwrapp/screens/drawer_help_screen.dart';
+import 'package:unwrapp/helpers/welcomescreen_controller.dart';
+import 'package:unwrapp/providers/auth.dart';
+import 'package:unwrapp/models/userChoicesList.dart';
+import 'package:unwrapp/models/colorpalette.dart';
 
 class NavigationColorsScreen extends StatefulWidget {
   static const routeName = '/colors-selection-screen';
@@ -91,6 +92,7 @@ class ColorsOverviewScreen extends StatefulWidget {
 class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
     with TickerProviderStateMixin {
   List<UserColorPalette> colorPaletteList = UserColorPalette.colorPaletteList;
+  List<UserChoicesList> templateList = UserChoicesList.templateList;
 
   AnimationController animationController;
   // bool multiple = true;
@@ -173,6 +175,9 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
 
   @override
   Widget build(BuildContext context) {
+    final UserChoicesList userchoiceargs =
+        ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       backgroundColor: AppTheme.white,
       body: FutureBuilder<bool>(
@@ -205,6 +210,7 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                               colorPaletteList.length,
                               (int index) {
                                 final int count = colorPaletteList.length;
+
                                 final Animation<double> animation =
                                     Tween<double>(begin: 0.0, end: 1.0).animate(
                                   CurvedAnimation(
@@ -218,9 +224,36 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                                   animation: animation,
                                   animationController: animationController,
                                   colorlistData: colorPaletteList[index],
-                                  callBack: () {
+                                  callBack: (_usercolorpalette) {
+                                    userchoiceargs.usercolorpalette =
+                                        _usercolorpalette;
+
                                     Navigator.of(context).pushNamed(
                                       NavigationFontsScreen.routeName,
+                                      arguments: userchoiceargs,
+
+                                      // UserChoicesList(
+                                      //   appBartitle:
+                                      //       templateList[index].appBartitle,
+                                      //   appbackgroundpic: templateList[index]
+                                      //       .appbackgroundpic,
+                                      //   appbackgroundcolorname:
+                                      //       templateList[index]
+                                      //           .appbackgroundcolorname,
+                                      //   apptypeindex: ModalRoute.of(context)
+                                      //       .settings
+                                      //       .arguments,
+                                      //   tempbuttonimage:
+                                      //       templateList[index].tempbuttonimage,
+                                      //   celebrationtitle: templateList[index]
+                                      //       .celebrationtitle,
+                                      //   celebrationtype:
+                                      //       templateList[index].celebrationtype,
+                                      //   usercolorpalette:
+                                      //       colorPaletteList[index],
+                                      //   userselectedfont: templateList[index]
+                                      //       .userselectedfont,
+                                      // ),
                                     );
 
                                     // Navigator.push<dynamic>(
@@ -319,7 +352,7 @@ class ColorsListView extends StatelessWidget {
       : super(key: key);
 
   final UserColorPalette colorlistData;
-  final VoidCallback callBack;
+  final void Function(UserColorPalette) callBack;
   final AnimationController animationController;
   final Animation<dynamic> animation;
 
@@ -373,7 +406,7 @@ class ColorsListView extends StatelessWidget {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(4.0)),
                         onTap: () {
-                          callBack();
+                          callBack(colorlistData);
                         },
                       ),
                     ),

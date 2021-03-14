@@ -5,21 +5,22 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:unWrapp/helpers/custom_route.dart';
-import 'package:unWrapp/helpers/welcomescreen_controller.dart';
-import 'package:unWrapp/providers/albums.dart';
-import 'package:unWrapp/providers/auth.dart';
-import 'package:unWrapp/screens/codeEntry_screen.dart';
-import 'package:unWrapp/screens/splash_screen.dart';
-import 'package:unWrapp/screens/albums_overview_screen.dart';
-import 'package:unWrapp/screens/album_detail_screen.dart';
-import 'package:unWrapp/screens/orders_screen.dart';
-import 'package:unWrapp/screens/edit_album_screen.dart';
-import 'package:unWrapp/screens/LoginFormWithValidation.dart';
-import 'package:unWrapp/screens/navigation_home_screen.dart';
-import 'package:unWrapp/screens/templates_selection_screen.dart';
-import 'package:unWrapp/screens/colors_selection_screen.dart';
-import 'package:unWrapp/screens/fonts_selection_screen.dart';
+import 'package:unwrapp/helpers/custom_route.dart';
+import 'package:unwrapp/helpers/welcomescreen_controller.dart';
+import 'package:unwrapp/providers/auth.dart';
+import 'package:unwrapp/providers/userchoices.dart';
+import 'package:unwrapp/screens/codeEntry_screen.dart';
+import 'package:unwrapp/screens/splash_screen.dart';
+import 'package:unwrapp/screens/albums_overview_screen.dart';
+import 'package:unwrapp/screens/album_detail_screen.dart';
+import 'package:unwrapp/screens/orders_screen.dart';
+import 'package:unwrapp/screens/edit_album_screen.dart';
+import 'package:unwrapp/screens/LoginFormWithValidation.dart';
+import 'package:unwrapp/screens/navigation_home_screen.dart';
+import 'package:unwrapp/screens/celebration_selection_screen.dart';
+import 'package:unwrapp/screens/colors_selection_screen.dart';
+import 'package:unwrapp/screens/fonts_selection_screen.dart';
+
 // import './screens/login_screen.dart';
 // import './screens/registration_screen.dart';
 
@@ -53,17 +54,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => Auth(),
         ),
-        ChangeNotifierProxyProvider<Auth, Albums>(
+        ChangeNotifierProxyProvider<Auth, UserChoices>(
           create: null,
-          update: (context, auth, previousProducts) => Albums(
+          update: (ctx, auth, previousChoices) => UserChoices(
             auth.userId,
-            previousProducts == null ? [] : previousProducts.items,
+            previousChoices == null ? [] : previousChoices.choices,
           ),
         ),
       ],
       child: Consumer<Auth>(
         builder: (context, auth, _) => MaterialApp(
-          title: 'unWrapp',
+          title: 'unwrapp',
           debugShowCheckedModeBanner: false,
           navigatorKey: key,
           theme: ThemeData(
@@ -107,8 +108,8 @@ class MyApp extends StatelessWidget {
             // LoginScreen.routeName: (context) => LoginScreen(),
             // RegistrationScreen.routeName: (context) => RegistrationScreen(),
             NavigationHomeScreen.routeName: (context) => NavigationHomeScreen(),
-            NavigationTemplatesScreen.routeName: (context) =>
-                NavigationTemplatesScreen(),
+            CelebrationSelectionScreen.routeName: (context) =>
+                CelebrationSelectionScreen(),
             NavigationColorsScreen.routeName: (context) =>
                 NavigationColorsScreen(),
             NavigationFontsScreen.routeName: (context) =>

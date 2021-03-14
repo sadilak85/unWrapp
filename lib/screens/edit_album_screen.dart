@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:unWrapp/providers/album.dart';
-import 'package:unWrapp/providers/albums.dart';
+import 'package:unwrapp/helpers/database_operations.dart';
+import 'package:unwrapp/providers/albums.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -17,11 +17,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
-  var _editedProduct = Album(
-    id: null,
-    title: '',
-    appbackgroundcolorname: '',
-    appbackgroundpic: '',
+  var _editedProduct = OrderItem(
+    id: '',
+    amount: null,
+    dateTime: null,
   );
   var _initValues = {
     'title': '',
@@ -42,14 +41,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
     if (_isInit) {
       final productId = ModalRoute.of(context).settings.arguments as String;
       if (productId != null) {
-        _editedProduct =
-            Provider.of<Albums>(context, listen: false).findById(productId);
         _initValues = {
-          'title': _editedProduct.title,
-          'description': _editedProduct.appbackgroundcolorname,
+          'title': _editedProduct.id,
+          'description': _editedProduct.id,
           'imageUrl': '',
         };
-        _imageUrlController.text = _editedProduct.appbackgroundpic;
+        _imageUrlController.text = _editedProduct.id;
       }
     }
     _isInit = false;
@@ -90,11 +87,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
     });
     if (_editedProduct.id != null) {
       await Provider.of<Albums>(context, listen: false)
-          .updateProduct(_editedProduct.id, _editedProduct);
+          .updateProduct(_editedProduct.id, null);
     } else {
       try {
-        await Provider.of<Albums>(context, listen: false)
-            .addProduct(_editedProduct);
+        await editData({'title': 'title'}, 'title');
       } catch (error) {
         await showDialog(
           context: context,
@@ -162,13 +158,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        _editedProduct = Album(
-                          title: value,
-                          appbackgroundcolorname:
-                              _editedProduct.appbackgroundcolorname,
-                          appbackgroundpic: _editedProduct.appbackgroundpic,
-                          id: _editedProduct.id,
-                        );
+                        _editedProduct = null;
+
+                        //  Album(
+                        //   title: value,
+                        //   appbackgroundcolorname:
+                        //       _editedProduct.appbackgroundcolorname,
+                        //   appbackgroundpic: _editedProduct.appbackgroundpic,
+                        //   id: _editedProduct.id,
+                        // );
                       },
                     ),
                     TextFormField(
@@ -194,13 +192,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        _editedProduct = Album(
-                          title: _editedProduct.title,
-                          appbackgroundcolorname:
-                              _editedProduct.appbackgroundcolorname,
-                          appbackgroundpic: _editedProduct.appbackgroundpic,
-                          id: _editedProduct.id,
-                        );
+                        _editedProduct = null;
+                        // Album(
+                        //   title: _editedProduct.title,
+                        //   appbackgroundcolorname:
+                        //       _editedProduct.appbackgroundcolorname,
+                        //   appbackgroundpic: _editedProduct.appbackgroundpic,
+                        //   id: _editedProduct.id,
+                        // );
                       },
                     ),
                     TextFormField(
@@ -219,12 +218,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         return null;
                       },
                       onSaved: (value) {
-                        _editedProduct = Album(
-                          title: _editedProduct.title,
-                          appbackgroundcolorname: value,
-                          appbackgroundpic: _editedProduct.appbackgroundpic,
-                          id: _editedProduct.id,
-                        );
+                        _editedProduct = null;
+
+                        // Album(
+                        //   title: _editedProduct.title,
+                        //   appbackgroundcolorname: value,
+                        //   appbackgroundpic: _editedProduct.appbackgroundpic,
+                        //   id: _editedProduct.id,
+                        // );
                       },
                     ),
                     Row(
@@ -278,13 +279,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                               return null;
                             },
                             onSaved: (value) {
-                              _editedProduct = Album(
-                                title: _editedProduct.title,
-                                appbackgroundcolorname:
-                                    _editedProduct.appbackgroundcolorname,
-                                appbackgroundpic: value,
-                                id: _editedProduct.id,
-                              );
+                              _editedProduct = null;
                             },
                           ),
                         ),

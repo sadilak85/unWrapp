@@ -1,7 +1,7 @@
-import 'package:unWrapp/templates_app/fitness_app_style/ui_view/area_list_view.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/ui_view/running_view.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/ui_view/title_view.dart';
-import 'package:unWrapp/templates_app/fitness_app_style/ui_view/workout_view.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/ui_view/area_list_view.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/ui_view/running_view.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/ui_view/title_view.dart';
+import 'package:unwrapp/templates_app/fitness_app_style/ui_view/workout_view.dart';
 import 'package:flutter/material.dart';
 
 import '../fintness_app_theme.dart';

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:unWrapp/widgets/app_drawer.dart';
-import 'package:unWrapp/models/templatelist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:unWrapp/widgets/productItem.dart';
+import 'package:unwrapp/widgets/app_drawer.dart';
+import 'package:unwrapp/models/userChoicesList.dart';
 
 class AlbumsOverviewScreen extends StatefulWidget {
   static const routeName = '/products-overview';
@@ -13,41 +12,28 @@ class AlbumsOverviewScreen extends StatefulWidget {
 
 class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
   var _isLoading = false;
-  String _selectedTabTitle;
-
-  Future<void> uploadingData(String _id, String _title,
-      String _appbackgroundcolorname, String _appbackgroundpic) async {
-    await FirebaseFirestore.instance.collection("templates").add({
-      'id': _id,
-      'title': _title,
-      'appbackgroundcolorname': _appbackgroundcolorname,
-      'appbackgroundpic': _appbackgroundpic,
-    });
-  }
-
-  Future<void> getData() async {
-    print('ssdfah');
-    FirebaseFirestore.instance
-        .collection('templates')
-        .get()
-        .then((QuerySnapshot querySnapshot) => {
-              querySnapshot.docs.forEach((doc) {
-                print(doc["layoutType"]);
-              }),
-            });
-  }
 
   @override
   Widget build(BuildContext context) {
     CollectionReference _collection =
         FirebaseFirestore.instance.collection('templates');
 
-    final ScreenArguments args = ModalRoute.of(context).settings.arguments;
+    final UserChoicesList userchoiceargs =
+        ModalRoute.of(context).settings.arguments;
+    print(userchoiceargs.appBartitle);
+    print(userchoiceargs.appbackgroundcolorname);
+    print(userchoiceargs.appbackgroundpic);
+    print(userchoiceargs.apptypeindex);
+    print(userchoiceargs.celebrationtitle);
+    print(userchoiceargs.celebrationtype);
+    print(userchoiceargs.tempbuttonimage);
+    print(userchoiceargs.usercolorpalette.appbackgroundcolorpalette);
+    print(userchoiceargs.userselectedfont);
 
-    _selectedTabTitle = args.userchoices['title'];
+    String _selectedTabTitle = userchoiceargs.appBartitle.toString();
     return Scaffold(
       appBar: AppBar(
-        title: Text('_selectedTabTitle'),
+        title: Text(_selectedTabTitle),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -60,25 +46,40 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
         stream: _collection.snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text('Something went wrong');
+            return Column(
+              children: <Widget>[
+                Center(child: CircularProgressIndicator()),
+                Text("Something went wrong"),
+              ],
+            );
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
+            return Column(
+              children: <Widget>[
+                Center(child: CircularProgressIndicator()),
+                Text("Loading"),
+              ],
+            );
           }
 
           final templateDocs = snapshot.data.docs;
           return !snapshot.hasData
               ? Center(child: CircularProgressIndicator())
               : ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) => ProductItem(
-                    layoutType: templateDocs[index].data()['layoutType'],
-                    fontStyle: templateDocs[index].data()['fontStyle'],
-                    celebrationType:
-                        templateDocs[index].data()['celebrationType'],
-                    colorPalette: templateDocs[index].data()['colorPalette'],
-                  ),
+                  itemCount: 1, itemBuilder: (context, index) => null,
+
+                  //   UserChoicesList(
+                  //   appBartitle:templateDocs[index].data()['appBartitle'],
+                  //   appbackgroundpic: templateDocs[index].data()['appbackgroundpic'],
+                  //   appbackgroundcolorname: templateDocs[index].data()['appbackgroundcolorname'],
+                  //   apptypeindex: templateDocs[index].data()['apptypeindex'],
+                  //   tempbuttonimage: templateDocs[index].data()['tempbuttonimage'],
+                  //   celebrationtitle: templateDocs[index].data()['celebrationtitle'],
+                  //   celebrationtype: templateDocs[index].data()['celebrationtype'],
+                  //   usercolorpalette: templateDocs[index].data()['usercolorpalette'],
+                  //   userselectedfont: templateDocs[index].data()['userselectedfont'],
+                  // ),
                 );
         },
       ),
