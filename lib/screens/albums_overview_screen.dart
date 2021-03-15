@@ -5,7 +5,6 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:unwrapp/widgets/app_drawer.dart';
 import 'package:unwrapp/models/userChoicesList.dart';
 import 'package:unwrapp/providers/themedata.dart';
-import 'package:unwrapp/helpers/showdialogbox.dart';
 
 class AlbumsOverviewScreen extends StatefulWidget {
   static const routeName = '/products-overview';
@@ -36,11 +35,120 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen>
   Color currentColor = Colors.red;
   String _selectedTabTitle;
   bool _initial = true;
-  String _textboxmessage = '''\n\nChoose a celebration concept for your app. 
-                      \n\nAI will make it easy for you to start creation regarding your selection''';
+
+  void showDialogmenuAdd(_deviceSize) {
+    showGeneralDialog(
+      barrierLabel: "Barrier",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: Duration(milliseconds: 200),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: _deviceSize.height / 2,
+            child: SizedBox.expand(
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: GridView.count(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 20,
+                  crossAxisCount: 3,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.red,
+                                  Colors.red,
+                                  Colors.redAccent,
+                                ],
+                                stops: [
+                                  0,
+                                  0.5,
+                                  0.5
+                                ]),
+                          ),
+                          child: TextButton(
+                            child: Icon(
+                              Icons.palette,
+                              size: 32,
+                              color: Provider.of<ThemeModel>(context,
+                                      listen: false)
+                                  .primarycolor,
+                            ),
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Select a color'),
+                                    content: SingleChildScrollView(
+                                      child: BlockPicker(
+                                        pickerColor: currentColor,
+                                        onColorChanged: (Color value) {
+                                          Provider.of<ThemeModel>(context,
+                                                  listen: false)
+                                              .primarycolor = value;
+
+                                          setState(() => currentColor = value);
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: Text(
+                              'sdf',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            margin: EdgeInsets.only(bottom: 20, left: 12, right: 12),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(1, 1), end: Offset(0, 0)).animate(anim),
+          child: child,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final _deviceSize = MediaQuery.of(context).size;
+
     CollectionReference _collection =
         FirebaseFirestore.instance.collection('templates');
 
@@ -211,7 +319,8 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen>
       ),
       floatingActionButton: creator
           ? FloatingActionButton(
-              onPressed: () => showDialogmenu(context, _textboxmessage),
+              tooltip: "New Dialog",
+              onPressed: () => showDialogmenuAdd(_deviceSize),
               child: Icon(Icons.add,
                   color: Provider.of<ThemeModel>(context, listen: false)
                       .accentcolor),

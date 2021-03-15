@@ -18,13 +18,6 @@ void showDialogmenu(context, _textboxmessage) {
               padding: const EdgeInsets.all(30.0),
               child: Column(
                 children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Icon(
-                      Icons.help_outline,
-                      color: AppTheme.dark_grey,
-                    ),
-                  ),
                   Text(
                     _textboxmessage,
                     style: TextStyle(
@@ -44,7 +37,7 @@ void showDialogmenu(context, _textboxmessage) {
           margin: EdgeInsets.only(bottom: 50, left: 12, right: 12),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(40),
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
       );
