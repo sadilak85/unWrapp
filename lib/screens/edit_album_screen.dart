@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:unwrapp/helpers/database_operations.dart';
 import 'package:unwrapp/providers/albums.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -136,7 +137,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
       ),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitDoubleBounce(
+                color: Colors.white,
+                size: 100.0,
+              ),
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),

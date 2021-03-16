@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:unwrapp/providers/albums.dart';
-
 import 'package:unwrapp/widgets/app_drawer.dart';
 
 class AlbumsOverviewScreen extends StatefulWidget {
@@ -107,7 +107,10 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen> {
       drawer: AppDrawer(),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitDoubleBounce(
+                color: Colors.white,
+                size: 100.0,
+              ),
             )
           : Container(
               decoration: BoxDecoration(

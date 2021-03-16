@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:unwrapp/widgets/app_drawer.dart';
 import 'package:unwrapp/models/userChoicesList.dart';
 import 'package:unwrapp/providers/themedata.dart';
@@ -280,7 +281,12 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen>
           if (snapshot.hasError) {
             return Column(
               children: <Widget>[
-                Center(child: CircularProgressIndicator()),
+                Center(
+                  child: SpinKitDoubleBounce(
+                    color: Colors.white,
+                    size: 100.0,
+                  ),
+                ),
                 Text("Something went wrong"),
               ],
             );
@@ -289,7 +295,12 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen>
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Column(
               children: <Widget>[
-                Center(child: CircularProgressIndicator()),
+                Center(
+                  child: SpinKitDoubleBounce(
+                    color: Colors.white,
+                    size: 100.0,
+                  ),
+                ),
                 Text("Loading"),
               ],
             );
@@ -297,7 +308,12 @@ class _AlbumsOverviewScreenState extends State<AlbumsOverviewScreen>
 
           final templateDocs = snapshot.data.docs;
           return !snapshot.hasData
-              ? Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: SpinKitDoubleBounce(
+                    color: Colors.white,
+                    size: 100.0,
+                  ),
+                )
               : ListView.builder(
                   itemCount: 1,
                   itemBuilder: (context, index) =>

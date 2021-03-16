@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:unwrapp/widgets/app_drawer.dart';
 
 class OrdersScreen extends StatelessWidget {
@@ -17,7 +18,12 @@ class OrdersScreen extends StatelessWidget {
         // future: Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
         builder: (context, dataSnapshot) {
           if (dataSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: SpinKitDoubleBounce(
+                color: Colors.white,
+                size: 100.0,
+              ),
+            );
           } else {
             if (dataSnapshot.error != null) {
               // ...
