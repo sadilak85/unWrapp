@@ -23,6 +23,12 @@ Give him/her a self made, personalized app as a present or suprise!
 6) Personal information such as the structure of the app (Background, text, albums, names, etc) is saved in Realtime Database as JSon data.
 7) Pictures/Videos in Storage need also this authentication , so we need a first time authentication (compulsory)
 
+8) Creation of the personal app:
+<img src="https://github.com/sadilak85/unwrapp/blob/main/git_pics/Page4.png" width="30%">
+
+<img src="https://github.com/sadilak85/unwrapp/blob/main/git_pics/Page5.png" width="30%"> 
+
+
 
 ### Prerequisites
 
