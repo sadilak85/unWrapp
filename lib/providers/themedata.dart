@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:unwrapp/helpers/custom_route.dart';
 
 class ThemeModel extends ChangeNotifier {
-  Color primarycolor = Color.fromRGBO(252, 248, 232, 1);
+  Color primarycolor = Color.fromRGBO(244, 67, 54, 1);
   Color accentcolor = Color.fromRGBO(212, 226, 212, 1);
 
   ThemeData get currentTheme => ThemeData(
