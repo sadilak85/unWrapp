@@ -140,65 +140,54 @@ class _FontsOverviewScreenState extends State<FontsOverviewScreen>
                 children: <Widget>[
                   appBar(),
                   Expanded(
-                    child: FutureBuilder<bool>(
-                      future: getData(),
-                      builder:
-                          (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const SizedBox();
-                        } else {
-                          return GridView(
-                            padding: const EdgeInsets.only(
-                                top: 10, left: 25, right: 25),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            children: List<Widget>.generate(
-                              userFontsList.length,
-                              (int index) {
-                                final int count = userFontsList.length;
+                    child: GridView(
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 25, right: 25),
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      children: List<Widget>.generate(
+                        userFontsList.length,
+                        (int index) {
+                          final int count = userFontsList.length;
 
-                                final Animation<double> animation =
-                                    Tween<double>(begin: 0.0, end: 1.0).animate(
-                                  CurvedAnimation(
-                                    parent: animationController,
-                                    curve: Interval((1 / count) * index, 1.0,
-                                        curve: Curves.fastOutSlowIn),
-                                  ),
-                                );
-                                animationController.forward();
-                                return FontsListView(
-                                  animation: animation,
-                                  animationController: animationController,
-                                  fontslistData: userFontsList[index],
-                                  callBack: (_userfont) {
-                                    userchoiceargs.userselectedfont = _userfont;
-
-                                    Navigator.of(context).pushNamed(
-                                      AlbumsOverviewScreen.routeName,
-                                      arguments: userchoiceargs,
-                                    );
-
-                                    // Navigator.push<dynamic>(
-                                    //   context,
-                                    //   MaterialPageRoute<dynamic>(
-                                    //     builder: (BuildContext context) =>
-                                    //         userFontsList[index].navigateScreen,
-                                    //   ),
-                                    // );
-                                  },
-                                );
-                              },
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
-                              mainAxisSpacing: 15.0,
-                              crossAxisSpacing: 15.0,
-                              childAspectRatio: 2,
+                          final Animation<double> animation =
+                              Tween<double>(begin: 0.0, end: 1.0).animate(
+                            CurvedAnimation(
+                              parent: animationController,
+                              curve: Interval((1 / count) * index, 1.0,
+                                  curve: Curves.fastOutSlowIn),
                             ),
                           );
-                        }
-                      },
+                          animationController.forward();
+                          return FontsListView(
+                            animation: animation,
+                            animationController: animationController,
+                            fontslistData: userFontsList[index],
+                            callBack: (_userfont) {
+                              userchoiceargs.userselectedfont = _userfont;
+
+                              Navigator.of(context).pushNamed(
+                                AlbumsOverviewScreen.routeName,
+                                arguments: userchoiceargs,
+                              );
+
+                              // Navigator.push<dynamic>(
+                              //   context,
+                              //   MaterialPageRoute<dynamic>(
+                              //     builder: (BuildContext context) =>
+                              //         userFontsList[index].navigateScreen,
+                              //   ),
+                              // );
+                            },
+                          );
+                        },
+                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 15.0,
+                        crossAxisSpacing: 15.0,
+                        childAspectRatio: 2,
+                      ),
                     ),
                   ),
                 ],

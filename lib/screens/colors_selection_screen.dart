@@ -140,89 +140,78 @@ class _ColorsOverviewScreenState extends State<ColorsOverviewScreen>
                 children: <Widget>[
                   appBar(),
                   Expanded(
-                    child: FutureBuilder<bool>(
-                      future: getData(),
-                      builder:
-                          (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const SizedBox();
-                        } else {
-                          return GridView(
-                            padding: const EdgeInsets.only(
-                                top: 0, left: 12, right: 12),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            children: List<Widget>.generate(
-                              colorPaletteList.length,
-                              (int index) {
-                                final int count = colorPaletteList.length;
+                    child: GridView(
+                      padding:
+                          const EdgeInsets.only(top: 0, left: 12, right: 12),
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      children: List<Widget>.generate(
+                        colorPaletteList.length,
+                        (int index) {
+                          final int count = colorPaletteList.length;
 
-                                final Animation<double> animation =
-                                    Tween<double>(begin: 0.0, end: 1.0).animate(
-                                  CurvedAnimation(
-                                    parent: animationController,
-                                    curve: Interval((1 / count) * index, 1.0,
-                                        curve: Curves.fastOutSlowIn),
-                                  ),
-                                );
-                                animationController.forward();
-                                return ColorsListView(
-                                  animation: animation,
-                                  animationController: animationController,
-                                  colorlistData: colorPaletteList[index],
-                                  callBack: (_usercolorpalette) {
-                                    userchoiceargs.usercolorpalette =
-                                        _usercolorpalette;
-
-                                    Navigator.of(context).pushNamed(
-                                      NavigationFontsScreen.routeName,
-                                      arguments: userchoiceargs,
-
-                                      // UserChoicesList(
-                                      //   appBartitle:
-                                      //       templateList[index].appBartitle,
-                                      //   appbackgroundpic: templateList[index]
-                                      //       .appbackgroundpic,
-                                      //   appbackgroundcolorname:
-                                      //       templateList[index]
-                                      //           .appbackgroundcolorname,
-                                      //   apptypeindex: ModalRoute.of(context)
-                                      //       .settings
-                                      //       .arguments,
-                                      //   tempbuttonimage:
-                                      //       templateList[index].tempbuttonimage,
-                                      //   celebrationtitle: templateList[index]
-                                      //       .celebrationtitle,
-                                      //   celebrationtype:
-                                      //       templateList[index].celebrationtype,
-                                      //   usercolorpalette:
-                                      //       colorPaletteList[index],
-                                      //   userselectedfont: templateList[index]
-                                      //       .userselectedfont,
-                                      // ),
-                                    );
-
-                                    // Navigator.push<dynamic>(
-                                    //   context,
-                                    //   MaterialPageRoute<dynamic>(
-                                    //     builder: (BuildContext context) =>
-                                    //         colorPaletteList[index].navigateScreen,
-                                    //   ),
-                                    // );
-                                  },
-                                );
-                              },
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 20.0,
-                              crossAxisSpacing: 20.0,
-                              childAspectRatio: 1.0,
+                          final Animation<double> animation =
+                              Tween<double>(begin: 0.0, end: 1.0).animate(
+                            CurvedAnimation(
+                              parent: animationController,
+                              curve: Interval((1 / count) * index, 1.0,
+                                  curve: Curves.fastOutSlowIn),
                             ),
                           );
-                        }
-                      },
+                          animationController.forward();
+                          return ColorsListView(
+                            animation: animation,
+                            animationController: animationController,
+                            colorlistData: colorPaletteList[index],
+                            callBack: (_usercolorpalette) {
+                              userchoiceargs.usercolorpalette =
+                                  _usercolorpalette;
+
+                              Navigator.of(context).pushNamed(
+                                NavigationFontsScreen.routeName,
+                                arguments: userchoiceargs,
+
+                                // UserChoicesList(
+                                //   appBartitle:
+                                //       templateList[index].appBartitle,
+                                //   appbackgroundpic: templateList[index]
+                                //       .appbackgroundpic,
+                                //   appbackgroundcolorname:
+                                //       templateList[index]
+                                //           .appbackgroundcolorname,
+                                //   apptypeindex: ModalRoute.of(context)
+                                //       .settings
+                                //       .arguments,
+                                //   tempbuttonimage:
+                                //       templateList[index].tempbuttonimage,
+                                //   celebrationtitle: templateList[index]
+                                //       .celebrationtitle,
+                                //   celebrationtype:
+                                //       templateList[index].celebrationtype,
+                                //   usercolorpalette:
+                                //       colorPaletteList[index],
+                                //   userselectedfont: templateList[index]
+                                //       .userselectedfont,
+                                // ),
+                              );
+
+                              // Navigator.push<dynamic>(
+                              //   context,
+                              //   MaterialPageRoute<dynamic>(
+                              //     builder: (BuildContext context) =>
+                              //         colorPaletteList[index].navigateScreen,
+                              //   ),
+                              // );
+                            },
+                          );
+                        },
+                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 20.0,
+                        crossAxisSpacing: 20.0,
+                        childAspectRatio: 1.0,
+                      ),
                     ),
                   ),
                 ],

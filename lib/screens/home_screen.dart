@@ -55,57 +55,46 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 children: <Widget>[
                   appBar(),
                   Expanded(
-                    child: FutureBuilder<bool>(
-                      future: getData(),
-                      builder:
-                          (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const SizedBox();
-                        } else {
-                          return GridView(
-                            padding: const EdgeInsets.only(
-                                top: 0, left: 12, right: 12),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            children: List<Widget>.generate(
-                              homeList.length,
-                              (int index) {
-                                final int count = homeList.length;
-                                final Animation<double> animation =
-                                    Tween<double>(begin: 0.0, end: 1.0).animate(
-                                  CurvedAnimation(
-                                    parent: animationController,
-                                    curve: Interval((1 / count) * index, 1.0,
-                                        curve: Curves.fastOutSlowIn),
-                                  ),
-                                );
-                                animationController.forward();
-                                return HomeListView(
-                                  animation: animation,
-                                  animationController: animationController,
-                                  listData: homeList[index],
-                                  callBack: () {
-                                    Navigator.push<dynamic>(
-                                      context,
-                                      MaterialPageRoute<dynamic>(
-                                        builder: (BuildContext context) =>
-                                            homeList[index].navigateScreen,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
-                              mainAxisSpacing: 15.0,
-                              crossAxisSpacing: 15.0,
-                              childAspectRatio: 1.5,
+                    child: GridView(
+                      padding:
+                          const EdgeInsets.only(top: 0, left: 12, right: 12),
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      children: List<Widget>.generate(
+                        homeList.length,
+                        (int index) {
+                          final int count = homeList.length;
+                          final Animation<double> animation =
+                              Tween<double>(begin: 0.0, end: 1.0).animate(
+                            CurvedAnimation(
+                              parent: animationController,
+                              curve: Interval((1 / count) * index, 1.0,
+                                  curve: Curves.fastOutSlowIn),
                             ),
                           );
-                        }
-                      },
+                          animationController.forward();
+                          return HomeListView(
+                            animation: animation,
+                            animationController: animationController,
+                            listData: homeList[index],
+                            callBack: () {
+                              Navigator.push<dynamic>(
+                                context,
+                                MaterialPageRoute<dynamic>(
+                                  builder: (BuildContext context) =>
+                                      homeList[index].navigateScreen,
+                                ),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 15.0,
+                        crossAxisSpacing: 15.0,
+                        childAspectRatio: 1.5,
+                      ),
                     ),
                   ),
                 ],

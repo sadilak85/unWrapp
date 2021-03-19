@@ -138,85 +138,70 @@ class _CelebrationOverviewScreenState extends State<CelebrationOverviewScreen>
                 children: <Widget>[
                   appBar(),
                   Expanded(
-                    child: FutureBuilder<bool>(
-                      future: getData(),
-                      builder:
-                          (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const SizedBox();
-                        } else {
-                          return GridView(
-                            padding: const EdgeInsets.only(
-                                top: 10, left: 12, right: 12),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            children: List<Widget>.generate(
-                              templateList.length,
-                              (int index) {
-                                final int count = templateList.length;
-                                final Animation<double> animation =
-                                    Tween<double>(begin: 0.0, end: 1.0).animate(
-                                  CurvedAnimation(
-                                    parent: animationController,
-                                    curve: Interval((1 / count) * index, 1.0,
-                                        curve: Curves.fastOutSlowIn),
-                                  ),
-                                );
-                                animationController.forward();
-                                return TemplateListView(
-                                  animation: animation,
-                                  animationController: animationController,
-                                  animationvaluechanger:
-                                      index % 2 == 0 ? 100 : -100,
-                                  listData: templateList[index],
-                                  callBack: () {
-                                    Navigator.of(context).pushNamed(
-                                      NavigationColorsScreen.routeName,
-                                      arguments: UserChoicesList(
-                                        appBartitle:
-                                            templateList[index].appBartitle,
-                                        appbackgroundpic: templateList[index]
-                                            .appbackgroundpic,
-                                        appbackgroundcolorname:
-                                            templateList[index]
-                                                .appbackgroundcolorname,
-                                        apptypeindex: ModalRoute.of(context)
-                                            .settings
-                                            .arguments,
-                                        tempbuttonimage:
-                                            templateList[index].tempbuttonimage,
-                                        celebrationtitle: templateList[index]
-                                            .celebrationtitle,
-                                        celebrationtype:
-                                            templateList[index].celebrationtype,
-                                        usercolorpalette: templateList[index]
-                                            .usercolorpalette,
-                                        userselectedfont: templateList[index]
-                                            .userselectedfont,
-                                      ),
-                                    );
-
-                                    // Navigator.push<dynamic>(
-                                    //   context,
-                                    //   MaterialPageRoute<dynamic>(
-                                    //     builder: (BuildContext context) =>
-                                    //         templateList[index].navigateScreen,
-                                    //   ),
-                                    // );
-                                  },
-                                );
-                              },
-                            ),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1,
-                              mainAxisSpacing: 15.0,
-                              crossAxisSpacing: 15.0,
-                              childAspectRatio: 1.5,
+                    child: GridView(
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 12, right: 12),
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      children: List<Widget>.generate(
+                        templateList.length,
+                        (int index) {
+                          final int count = templateList.length;
+                          final Animation<double> animation =
+                              Tween<double>(begin: 0.0, end: 1.0).animate(
+                            CurvedAnimation(
+                              parent: animationController,
+                              curve: Interval((1 / count) * index, 1.0,
+                                  curve: Curves.fastOutSlowIn),
                             ),
                           );
-                        }
-                      },
+                          animationController.forward();
+                          return TemplateListView(
+                            animation: animation,
+                            animationController: animationController,
+                            animationvaluechanger: index % 2 == 0 ? 100 : -100,
+                            listData: templateList[index],
+                            callBack: () {
+                              Navigator.of(context).pushNamed(
+                                NavigationColorsScreen.routeName,
+                                arguments: UserChoicesList(
+                                  appBartitle: templateList[index].appBartitle,
+                                  appbackgroundpic:
+                                      templateList[index].appbackgroundpic,
+                                  appbackgroundcolorname: templateList[index]
+                                      .appbackgroundcolorname,
+                                  apptypeindex:
+                                      ModalRoute.of(context).settings.arguments,
+                                  tempbuttonimage:
+                                      templateList[index].tempbuttonimage,
+                                  celebrationtitle:
+                                      templateList[index].celebrationtitle,
+                                  celebrationtype:
+                                      templateList[index].celebrationtype,
+                                  usercolorpalette:
+                                      templateList[index].usercolorpalette,
+                                  userselectedfont:
+                                      templateList[index].userselectedfont,
+                                ),
+                              );
+
+                              // Navigator.push<dynamic>(
+                              //   context,
+                              //   MaterialPageRoute<dynamic>(
+                              //     builder: (BuildContext context) =>
+                              //         templateList[index].navigateScreen,
+                              //   ),
+                              // );
+                            },
+                          );
+                        },
+                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisSpacing: 15.0,
+                        crossAxisSpacing: 15.0,
+                        childAspectRatio: 1.5,
+                      ),
                     ),
                   ),
                 ],
