@@ -57,9 +57,6 @@ flutter pub get
 
 * **Serhat Adilak** 
 
-## License
-
-This project is licensed under **EngNear**
 
 ## Acknowledgments
 
